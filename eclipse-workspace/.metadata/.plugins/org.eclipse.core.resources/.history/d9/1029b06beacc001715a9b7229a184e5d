@@ -1,0 +1,19 @@
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+
+public class AccountMainTest
+{
+
+	public static void main(String[] args) 
+	{
+		// TODO Auto-generated method stub
+		JFrame account_main_frm = new JFrame("Account Book");
+		JLabel account_title_label = new JLabel("Account Book");
+		
+		account_main_frm.setBounds(400,200,400,400);
+		account_main_frm.add(account_title_label);
+		
+		account_main_frm.setVisible(true);
+	}
+
+}

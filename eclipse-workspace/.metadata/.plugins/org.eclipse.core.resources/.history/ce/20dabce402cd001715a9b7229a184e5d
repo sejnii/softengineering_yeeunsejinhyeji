@@ -1,0 +1,84 @@
+import java.awt.*;
+import java.awt.event.*;
+import javax.swing.*;
+
+public class test_2
+{
+
+	public static void main(String[] args) 
+	{
+//1.practice Swing - basic frame & button
+		JFrame frm = new JFrame("First Swing");
+		//title bar(제목 표시줄)
+		JFrame frm2 = new JFrame("Second Swing");
+		MouseListener listener = new MouseEventHandler();
+		
+		frm.setBounds(400,200,400,200);	//위치, 크기
+		frm.setLayout(new FlowLayout());	//컴포넌트 배치
+		
+
+		JButton btn1 = new JButton("My Button");
+		JButton btn2 = new JButton("our Button");
+		JButton btn3 = new JButton("Our Button");
+		
+		btn1.addMouseListener(listener);
+		btn2.addMouseListener(listener);
+		btn3.addMouseListener(listener);
+		
+		frm.add(btn1);
+		frm.add(btn2);
+		frm.add(btn3);
+		frm.setVisible(true);
+		
+//Accountmain test
+		JFrame account_main_frm = new JFrame("Account Book");
+		JLabel account_title_label = new JLabel("Account Book");
+		
+		account_main_frm.add(account_title_label);
+			
+		
+//2.X버튼 실행하게 해준다는데 없어도 됨
+/*		WindowListener listen = (WindowListener) new WindowAdapter()
+		{
+			public void windowClosing(WindowEvent ev)
+			{
+				System.exit(0);
+			}
+		};
+		frm.addWindowListener(listen);
+*/
+	}
+}
+//3.Event listener - 버튼위에 마우스 위치, 버튼 클릭 했을 때 이벤트 잡기	
+class MouseEventHandler implements MouseListener
+{
+	public void mouseClicked(MouseEvent e)
+	{
+		JButton button = (JButton)e.getComponent();
+		button.setText("Clicked");
+		System.out.println("Clicked Button"+e.getButton());
+		System.out.println("Clicked mouse and then released");
+		
+		JFrame fr = new JFrame();
+		fr.removeAll();
+	}
+	public void mouseEntered(MouseEvent e)
+	{
+		System.out.println("커서 버튼 위 진입");			
+	}
+	public void mouseExited(MouseEvent e) 
+	{
+		System.out.println("커서 버튼 위 탈출");
+	}
+	public void mousePressed(MouseEvent e) 
+	{
+		System.out.println("마우스 버튼 눌림");
+	}
+	public void mouseReleased(MouseEvent e)
+	{
+		System.out.println("마우스 버튼 풀림");
+	}
+}
+	
+	
+

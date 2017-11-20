@@ -1,0 +1,10 @@
+
+public class PersonTest 
+{
+	public void testNameConcat()
+	{
+		Person p = new Person("Ian","Darwin");
+		String f = p.getFullName();
+		assertEquals("","",f);
+	}
+}

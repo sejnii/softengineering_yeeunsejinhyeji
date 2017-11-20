@@ -1,0 +1,39 @@
+import java.awt.*;
+import java.awt.event.WindowListener;
+import java.awt.event.*;
+import javax.swing.*;
+
+public class test_2
+{
+
+	public static void main(String[] args) 
+	{
+//1.practice Swing - basic frame & button
+		JFrame frm = new JFrame("First Swing");
+		//title bar(제목 표시줄)
+		JFrame frm2 = new JFrame("Second Swing");
+		
+		frm.setBounds(400,200,400,400);	//위치, 크기
+		frm.setLayout(new FlowLayout());	//컴포넌트 배치
+
+		JButton btn1 = new JButton("My Button");
+		JButton btn2 = new JButton("our Button");
+		JButton btn3 = new JButton("Our Button");
+		
+		frm.add(btn1);
+		frm.add(btn2);
+		frm.add(btn3);
+		frm.setVisible(true);
+			
+//2.
+		WindowListener listen = (WindowListener) new WindowAdapter()
+		{
+			public void windowClosing(WindowEvent ev)
+			{
+				System.exit(0);
+			}
+		};
+		frm.addWindowListener(listen);
+	}
+
+}

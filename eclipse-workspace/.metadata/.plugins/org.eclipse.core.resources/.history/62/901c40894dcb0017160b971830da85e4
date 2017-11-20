@@ -1,0 +1,35 @@
+import java.util.*;
+import java.util.Date;
+
+public class test_1 {
+
+	@SuppressWarnings("deprecation")
+	public static void main(String[] args) 
+	{
+		// TODO Auto-generated method stub
+//1.DATE
+		Date d = new Date(86,04,04);
+		System.out.println("date is:"+d);
+	
+//2.boolenµ•¿Ã≈Õ	
+		final boolean DEBUG = false;
+		System.out.println("Hellow, World!");
+		if(DEBUG)
+		{
+			System.out.println("life is fuck");
+		}
+		else
+		{
+			System.out.println("life is fuck fucck");
+		}
+
+//3.
+		String name = "poem";
+		if (System.getProperty("debug.fetch") != null)
+		{
+			System.err.println("Fetching"+name);
+		}
+		
+	}
+
+}

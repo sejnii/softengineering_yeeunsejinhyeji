@@ -1,0 +1,24 @@
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.Scanner;
+
+public class VectorStr_account_date {
+
+	public static void main(String[] args) throws ParseException
+	{
+		// TODO Auto-generated method stub
+		
+		Scanner scanner3 = new Scanner(System.in);
+		
+		System.out.println("date:");
+		String test_D = scanner3.next();
+		SimpleDateFormat t_F = new SimpleDateFormat("yyyy-MM-dd");
+		//Date t_d = t_F.parse(test_D);
+		
+		System.out.println("date:");
+		System.out.println(t_F.parse(test_D));
+
+	}
+
+}

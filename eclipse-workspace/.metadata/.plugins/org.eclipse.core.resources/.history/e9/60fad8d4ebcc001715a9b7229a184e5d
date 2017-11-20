@@ -1,0 +1,26 @@
+import java.util.Vector;
+
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+
+public class AccountMainTest
+{
+
+	public static void main(String[] args) 
+	{
+		Vector <String> account_date = new Vector<String>();
+		Vector <String> account_item = new Vector<String>();
+		Vector <Integer> account_price = new Vector<Integer>();
+		
+		JFrame account_main_frm = new JFrame("Account Book");
+		JLabel account_title_label = new JLabel("Account Book");
+		
+		
+		account_main_frm.setBounds(100,100,400,400);
+		account_main_frm.setSize(400,400);
+		account_main_frm.add(account_title_label,10,200);
+		
+		account_main_frm.setVisible(true);
+	}
+
+}

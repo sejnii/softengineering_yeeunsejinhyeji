@@ -1,0 +1,27 @@
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+//import java.util.Date;
+//import java.util.Scanner;
+
+import javax.swing.JFormattedTextField;
+import javax.swing.JFrame;
+
+public class VectorStr_account_date {
+
+	public static void main(String[] args) throws ParseException
+	{
+		// TODO Auto-generated method stub
+		JFrame jf = new JFrame("date");
+		DateFormat format2 = new SimpleDateFormat("YYYY-MM-DD");
+		JFormattedTextField d_txtfield = new JFormattedTextField(format2);
+		
+		
+		
+		jf.add(d_txtfield);
+		
+		
+		
+	}
+
+}
