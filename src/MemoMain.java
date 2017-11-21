@@ -48,6 +48,7 @@ public class MemoMain extends JFrame implements ActionListener {
 		
 		//lbmemo = new JList(new DefaultListModel());
 	    //memomodel = (DefaultListModel) lbmemo.getModel();
+		// memo customer write & put that memo into label(lbmemo)
 		memo = new JTextField(30);
 		memo.setAlignmentX(Component.CENTER_ALIGNMENT);
 		memo.setDocument(new BoundDocument(20,memo));
