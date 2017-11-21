@@ -1,0 +1,10 @@
+package defau;
+
+public class Every_5thn_vector {
+
+	public static void main(String[] args) {
+		// TODO Auto-generated method stub
+
+	}
+
+}
