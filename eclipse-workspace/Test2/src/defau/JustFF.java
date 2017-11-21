@@ -9,6 +9,7 @@ import java.util.Scanner;
 import java.util.Vector;
 
 import javax.swing.*;
+import javax.swing.border.Border;
 public class JustFF
 {
 
@@ -16,15 +17,17 @@ public class JustFF
 	{
 		Vector <String> account_date = new Vector<String>();
 		Vector <String> account_item = new Vector<String>();
-//		Vector <Integer> account_price = new Vector<Integer>();
+		Vector <Integer> account_price = new Vector<Integer>();
 		
-		int account_table_column = 10;	//이건 나중에 set 호출한 횟수 혹은 추가 버튼 누른 횟수로 받아온다.
+		int account_table_column = 5;	//이건 나중에 set 호출한 횟수 혹은 추가 버튼 누른 횟수로 받아온다.
 
 		JFrame account_main_frame = new JFrame("Account Book");
 		JLabel account_title_label = new JLabel("<Account Book>");
 		JButton refresh_button = new JButton("Refresh");
-		JButton add_deal_button = new JButton("거래 내역 추가");
+		JButton add_deal_button = new JButton("Add transaction content");
 		JPanel account_table_pannel = new JPanel();
+		
+		JButton account_modify_button = new JButton("M");
 		
 		JLabel[][] account_table_label;	// = new JLabel[3];
 	//	JLabel[] account_table_label_item;
@@ -52,8 +55,23 @@ public class JustFF
 	//		account_table_label_item[i] = new JLabel(account_item.get(i));
 			account_table_label[i][2] = new JLabel(account_item.get(i));
 			
+			account_price.add(i*1500);
+			account_table_label[i][3] = new JLabel(account_price.get(i)+"won");
+			
+	//		account_table_label[i][4].getBorder();
+		//	account_table_label[i][4].setLayout(new BorderLayout());
+	//		account_table_label[i][4].setPreferredSize(new Dimension(200,100));
+			account_table_label[i][4] = new JLabel("Modify");
+	//		account_modify_button.setVisible(true);
+	//		account_table_label[i][4].setText("Modify");
+			account_modify_button.setSize(50, 30);
+			account_table_label[i][4].add(account_modify_button);
+
+			
 			account_table_pannel.add(account_table_label[i][1]);
 			account_table_pannel.add(account_table_label[i][2]);
+			account_table_pannel.add(account_table_label[i][3]);
+			account_table_pannel.add(account_table_label[i][4]);
 
 		}
 		
@@ -112,8 +130,20 @@ public class JustFF
 		}
 		
 */		
+	
 	}
-
+	public static JButton createButton()
+	{
+		JButton button =new JButton();
+		button.setBorderPainted(false);
+		button.setBorder(null);
+		button.setFocusable(false);
+		button.setMargin(new Insets(0,0,0,0));
+		button.setContentAreaFilled(false);
+//		button.setIcon(null);
+		button.setText("MM");
+		return button;
+	}
 
 
 	
