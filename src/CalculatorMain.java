@@ -93,7 +93,9 @@ public class CalculatorMain extends JFrame implements ActionListener{
 		bttempcon = new JButton("°F <-> °C");
 		btweightcon = new JButton("pound<->kg");
 		btlengcon = new JButton("inch<->cm");
-		
+		bttempcon.addActionListener(this);
+		btweightcon.addActionListener(this);
+		btlengcon.addActionListener(this);
 		panelcon.setBorder(BorderFactory.createTitledBorder("Unit Conversion"));
 		panelcon.setLayout(new GridLayout(3,1,20, 20));
 		panelcon.add(bttempcon);
@@ -195,6 +197,22 @@ public class CalculatorMain extends JFrame implements ActionListener{
 			tfresult.setText(""+result);
 		}
 		
+		else if(source == bttempcon){
+			Frame f = new ConvertTemperature();
+			f.addWindowListener(new WindowAdapter(){
+				public void windowClosing(WindowEvent e){
+					f.setVisible(false);
+					f.dispose();
+				}
+			});
+			
+		}
+		else if( source == btlengcon){
+			new ConvertLength();
+		}
+		else if(source == btweightcon){
+			new ConvertWeight();
+		}
 	}
 }
 
