@@ -1,0 +1,10 @@
+package defau;
+
+public class Delete_one_line {
+
+	public static void main(String[] args) {
+		// TODO Auto-generated method stub
+
+	}
+
+}
