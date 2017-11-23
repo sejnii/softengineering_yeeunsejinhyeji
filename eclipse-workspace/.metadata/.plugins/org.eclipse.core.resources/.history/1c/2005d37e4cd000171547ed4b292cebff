@@ -1,0 +1,39 @@
+package defau;
+
+import javax.swing.JButton;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+
+public class Add_account_history 
+{
+
+	public static void main(String[] args) 
+	{
+		JFrame account_add_frame = new JFrame("Add Transaction History");
+		JLabel acoount_add_main_label = new JLabel("Add Transaction History");
+		JLabel account_add_date_label = new JLabel("Enter the date(year, Month, Day)");
+		JLabel account_add_item_label = new JLabel("Enter the item name");
+		JLabel account_add_price_label = new JLabel("Enter the price");
+		
+		JButton account_add_yes_btn = new JButton("Save");
+
+		
+		account_add_frame.setLayout(null);
+		account_add_frame.setBounds(500,100,400,600);
+		
+		acoount_add_main_label.setBounds(50, 10, 300, 50);
+		account_add_yes_btn.setBounds(50, 450, 100, 30);
+
+		
+		account_add_frame.add(acoount_add_main_label);
+		account_add_frame.add(account_add_date_label);
+		account_add_frame.add(account_add_item_label);
+		account_add_frame.add(account_add_price_label);
+		account_add_frame.add(account_add_yes_btn);
+
+		
+		account_add_frame.setVisible(true);
+
+	}
+
+}
