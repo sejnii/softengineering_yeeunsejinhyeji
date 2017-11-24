@@ -3,6 +3,7 @@ package defau;
 import java.awt.*;
 import java.awt.event.*;
 import java.text.DateFormat;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Collection;
 import java.util.Date;
@@ -14,12 +15,13 @@ import javax.swing.border.Border;
 public class Every_5thn_vector
 {
 
+	public static Vector <String> account_date = new Vector<String>();
+	public static Vector <String> account_item = new Vector<String>();
+	public static Vector <Integer> account_price = new Vector<Integer>();
+
 	@SuppressWarnings("deprecation")
 	public static void main(String[] args) 
 	{
-		Vector <String> account_date = new Vector<String>();
-		Vector <String> account_item = new Vector<String>();
-		Vector <Integer> account_price = new Vector<Integer>();
 //		Vector <JButton> account_modify_btn = new Vector<JButton>();
 //		Vector <JButton> account_delete_btn = new Vector<JButton>();
 		
@@ -232,11 +234,10 @@ public class Every_5thn_vector
 	 
 	static String getAccountDate(int edit_index)
 	{
-		String account_date_string = null;
 
-		return account_date_string;
+		return account_date.get(edit_index);
 	}
-	public void setAccountDate(int edit_index, String edit_date)
+	public void setAccountDate(int edit_index, String edit_date) throws ParseException
 	{
 	//	Vector <String> account_date;
 	//	SimpleDateFormat account_date_sdf = new SimpleDateFormat("yyyy/MM/dd");
@@ -246,8 +247,12 @@ public class Every_5thn_vector
 	//	DateFormat account_date_dateformat = new SimpleDateFormat("dd/MM/yyyy");
 	//	String account_date_string = account_date_dateformat.format(new Date(20100000+edit_index*1000));
 	//	account_date_string="init_date"+edit_index+"th";
+		DateFormat account_date_format = new SimpleDateFormat("yyyy/MM/dd");
+		Date account_date_date = account_date_format.parse(edit_date);
+
+		account_date.set(edit_index, account_date_format.format(account_date_date));
 		
-		
+/*	
 		DateFormat df = new SimpleDateFormat("MM/dd/yyyy");
 		JFormattedTextField txtDate = new JFormattedTextField(df);
 		txtDate .addKeyListener(new KeyAdapter() {
@@ -262,7 +267,8 @@ public class Every_5thn_vector
 		      }
 		    }
 		  });
-		
+		account_date.add(edit_index, edit_date);
+*/
 	}
 	public static String getAccountItem(int edit_index)
 	{
@@ -309,7 +315,7 @@ class MouseEventHandler implements MouseListener
 //	{		
 //		e.removeremoveAll();
 //	}
-	@SuppressWarnings("deprecation")
+
 	public void mouseClicked(MouseEvent e)
 	{
 //		JFrame fr = (JFrame)e.getComponent();

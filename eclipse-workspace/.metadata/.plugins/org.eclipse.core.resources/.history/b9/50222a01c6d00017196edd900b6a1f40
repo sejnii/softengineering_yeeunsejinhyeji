@@ -19,7 +19,7 @@ import javax.swing.JOptionPane;
 
 public class Add_account_history 	//Class AccountWrite
 {
-	public static Vector <String> account_date = null;
+	public static Vector <String> account_date;
 	public static void setAccountDate(int edit_index, String edit_date) throws ParseException
 	{
 
@@ -58,7 +58,7 @@ public class Add_account_history 	//Class AccountWrite
 	public static void main(String[] args) throws ParseException 	//public AccountWrite()	//생성자
 	{
 
-		int account_add_index = 0;	//나중에 Main 함수에서 add함수 호출횟수 -delete함수 호출 횟수
+		public int account_add_index = 0;	//나중에 Main 함수에서 add함수 호출횟수 -delete함수 호출 횟수
 		
 		Date account_date = new Date();
 		DateFormat account_dateFormat = new SimpleDateFormat("yyyy/MM/dd");
@@ -78,38 +78,32 @@ public class Add_account_history 	//Class AccountWrite
 		//setAccountDate(int, string)
 		//마우스 버튼 클릭 -> 이벤트 클릭:set호출(입력된 값이 벡터로 들어가)
 
-			account_date_textfield.addKeyListener(new KeyAdapter()
+		account_date_textfield.addKeyListener(new KeyAdapter()
 		{
-			
-
 		    public void keyTyped(KeyEvent e)
 		    {
 		      char c = e.getKeyChar();
-		  
+		      
 		      if ( !(  (c >= '0') && (c <= '9') || (c == KeyEvent.VK_BACK_SPACE) || (c == KeyEvent.VK_DELETE) || (c == KeyEvent.VK_SLASH)  )  )    // 
 		      {
 		        JOptionPane.showMessageDialog(null, "Please Enter Valid");
-		   //     account_date_textfield.setText(account_dateFormat.format(account_date));
+		        
 		        //e.consume();
 		      }
-      
+		      
 		    }
 		    
 		  });
-
-			
-	/*	 account_add_yes_btn.addActionListener(new ActionListener(){
+	
+		 account_add_yes_btn.addActionListener(new ActionListener(){
 			   @SuppressWarnings("deprecation")
 			public void actionPerformed(ActionEvent ae)
 			   {
-				   
-				   setAccountDate(account_add_index,account_date_textfield.getText());
-
-	/*			   try 
+				  
+				   try 
 				   {
-					   
 					   setAccountDate(account_add_index,account_date_textfield.getText());
-					   
+					   account_add_index++;
 					   
 				   } 
 				   catch (ParseException e) 
@@ -124,7 +118,7 @@ public class Add_account_history 	//Class AccountWrite
 			      // .... do some operation on value ...
 			   }
 			});
-	*/	 
+		 
 	//	setAccountDate(account_add_index,account_date_textfield.);
 	//	System.out.println(account_date.get(account_add_index));
 		

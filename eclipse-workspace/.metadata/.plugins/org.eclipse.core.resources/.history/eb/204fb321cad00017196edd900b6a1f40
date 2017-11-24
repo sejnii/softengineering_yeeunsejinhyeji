@@ -96,7 +96,7 @@ public class Add_account_history 	//Class AccountWrite
 		    }
 		    
 		  });
-
+			account_add_yes_btn.add( account_add_yes_btn, new  MouseEventHandler());
 			
 	/*	 account_add_yes_btn.addActionListener(new ActionListener(){
 			   @SuppressWarnings("deprecation")
