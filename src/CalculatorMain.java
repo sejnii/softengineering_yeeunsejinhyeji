@@ -5,14 +5,17 @@ import java.text.ParseException;
 import java.util.*;
 import javax.swing.*;
 import javax.swing.event.*;
+import javax.swing.text.AttributeSet;
 import javax.swing.text.MaskFormatter;
-
+import javax.swing.text.PlainDocument;
+import javax.swing.text.BadLocationException;
 
 
 
 public class CalculatorMain extends JFrame implements ActionListener{
 
 
+	static JFrame frame;
 	JPanel paneltitle, panelcal, panelcon;
 	JLabel lbtitle, lboperator;
 	JTextField tfoperand1, tfoperand2, tfresult; 
@@ -70,6 +73,9 @@ public class CalculatorMain extends JFrame implements ActionListener{
 		panelcalnorth.add(lboperator);
 		panelcalnorth.add(tfoperand2);
 		
+		tfoperand1.setDocument(new JTextFieldLimit(10));
+		tfoperand2.setDocument(new JTextFieldLimit(10));
+		
 		panelcalcenter.setLayout(new FlowLayout(FlowLayout.CENTER, 20, 0));
 		panelcalcenter.add(btplus);
 		panelcalcenter.add(btminus);
@@ -113,7 +119,7 @@ public class CalculatorMain extends JFrame implements ActionListener{
 		add(panelcon, BorderLayout.EAST);
 		setTitle("Calculator");
 		setSize(500, 300);
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);	
+		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);	
 		setVisible(true);
 		setResizable(false);
 	
@@ -140,12 +146,37 @@ public class CalculatorMain extends JFrame implements ActionListener{
 	
 	public float divide(float a, float b){
 		
+		if(b==0)
+			throw new ArithmeticException();
 		return a/b;
 		
 	}
 	
+	class JTextFieldLimit extends PlainDocument {
+		  private int limit;
+		  JTextFieldLimit(int limit) {
+		    super();
+		    this.limit = limit;
+		  }
+
+		  JTextFieldLimit(int limit, boolean upper) {
+		    super();
+		    this.limit = limit;
+		  }
+
+		  public void insertString(int offset, String str, AttributeSet attr) throws BadLocationException {
+		    if (str == null)
+		      return;
+
+		    if ((getLength() + str.length()) <= limit) {
+		      super.insertString(offset, str, attr);
+		    }
+		  }
+		}
+
+	
 	public static void main(String[] args) throws ParseException {
-		new CalculatorMain();
+		frame = new CalculatorMain();
 		
 	}
 
@@ -189,9 +220,14 @@ public class CalculatorMain extends JFrame implements ActionListener{
 				result = multiply(a,b);
 				break;
 			case 4: 
+				try{
 				a = Float.parseFloat(tfoperand1.getText());
 				b = Float.parseFloat(tfoperand2.getText());
-				result = divide(a,b);
+				result = divide(a,b);}
+				catch(Exception z){
+					JOptionPane.showMessageDialog(frame, "error : division by zero");
+					break;
+				}
 				break;
 			}
 			tfresult.setText(""+result);

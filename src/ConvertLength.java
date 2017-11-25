@@ -5,6 +5,10 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 import javax.swing.*;
+import javax.swing.text.AttributeSet;
+import javax.swing.text.BadLocationException;
+import javax.swing.text.PlainDocument;
+
 
 public class ConvertLength extends JFrame implements ActionListener {
 
@@ -56,6 +60,9 @@ public class ConvertLength extends JFrame implements ActionListener {
 		panelcon.add(btconvert);
 		panelcon.add(tfsecond);
 		panelcon.add(lbsecond);
+		
+		tffirst.setDocument(new JTextFieldLimit(10));
+		
 		////////////////////////////////////////////////
 		
 		setLayout(new GridLayout(3,1, 0, 20));
@@ -64,7 +71,7 @@ public class ConvertLength extends JFrame implements ActionListener {
 		add(panelcon);
 		setTitle("Length Conversion");
 		setSize(500, 300);
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);	
+		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);	
 		setVisible(true);
 		setResizable(false);
 	
@@ -74,10 +81,35 @@ public class ConvertLength extends JFrame implements ActionListener {
 	
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
-		new ConvertLength();
-
+		JFrame frame = new ConvertLength();
+		
 	}
 
+	
+	class JTextFieldLimit extends PlainDocument {
+		  private int limit;
+		  JTextFieldLimit(int limit) {
+		    super();
+		    this.limit = limit;
+		  }
+
+		  JTextFieldLimit(int limit, boolean upper) {
+		    super();
+		    this.limit = limit;
+		  }
+
+		  public void insertString(int offset, String str, AttributeSet attr) throws BadLocationException {
+		    if (str == null)
+		      return;
+
+		    if ((getLength() + str.length()) <= limit) {
+		      super.insertString(offset, str, attr);
+		    }
+		  }
+		}
+
+	
+	
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		Object source = e.getSource();
