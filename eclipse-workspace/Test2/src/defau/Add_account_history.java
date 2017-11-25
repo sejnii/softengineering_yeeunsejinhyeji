@@ -4,6 +4,9 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -17,10 +20,61 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 
+
+class ActionEventHandler implements ActionListener
+{
+	String account_date_string = ""; 
+	JFormattedTextField account_date_textfield;
+	public ActionEventHandler(JFormattedTextField account_date_textfield)
+	{
+		this.account_date_string = account_date_textfield.getText();
+
+	}
+	public void actionPerformed(ActionEvent e)
+	{
+		account_date_textfield.setText("");
+		
+	}
+
+}
+/*
+class KeyEventHandler implements KeyListener
+{
+
+
+	public void keyPressed(KeyEvent e)
+	{
+		JFormattedTextField account_textfield = new JFormattedTextField();
+		char press_key_value_char;
+		press_key_value_char = e.getKeyChar();
+		 if ( !(  ( press_key_value_char>= '0') && (press_key_value_char <= '9') || (press_key_value_char == KeyEvent.VK_BACK_SPACE) || (press_key_value_char == KeyEvent.VK_DELETE) || (press_key_value_char == KeyEvent.VK_SLASH)  )  )    // 
+		{
+			JOptionPane.showMessageDialog(null, "Please Enter Valid");
+			account_textfield.setText("");
+		}
+
+	}
+//	@Override
+//	public void keyPressed(KeyEvent e) {
+		// TODO Auto-generated method stub
+		
+//	}
+//	@Override
+	public void keyReleased(KeyEvent e) {
+		// TODO Auto-generated method stub
+		
+	}
+	@Override
+	public void keyTyped(KeyEvent e) {
+		// TODO Auto-generated method stub
+		
+	}
+}
+*/
 public class Add_account_history 	//Class AccountWrite
 {
 	public static Vector <String> account_date = null;
-	public static void setAccountDate(int edit_index, String edit_date) throws ParseException
+	public void setAccountDate(int edit_index, String edit_date) throws ParseException
 	{
 
 	//	Vector <String> account_date;
@@ -55,12 +109,15 @@ public class Add_account_history 	//Class AccountWrite
 */
 	}
 
+	@SuppressWarnings("deprecation")
 	public static void main(String[] args) throws ParseException 	//public AccountWrite()	//생성자
 	{
+		Vector <String> account_date = null;
+
 
 		int account_add_index = 0;	//나중에 Main 함수에서 add함수 호출횟수 -delete함수 호출 횟수
 		
-		Date account_date = new Date();
+		Date account_date_date = new Date();
 		DateFormat account_dateFormat = new SimpleDateFormat("yyyy/MM/dd");
 		
 		
@@ -73,12 +130,21 @@ public class Add_account_history 	//Class AccountWrite
 		JButton account_add_yes_btn = new JButton("Save");
 
 	
+//		@SuppressWarnings("null")
+	//	ActionListener actionHandler = new ActionEventHandler(account_date_textfield);
+//		KeyListener keyHandler = new KeyEventHandler();
 		
-		account_date_textfield.setText(account_dateFormat.format(account_date));
+		
+		
+//		account_add_yes_btn.addActionListener(actionHandler);
+//		account_add_yes_btn.addKeyListener(keyHandler);
+		
+		account_date_textfield.setText(account_dateFormat.format(account_date_date));
 		//setAccountDate(int, string)
 		//마우스 버튼 클릭 -> 이벤트 클릭:set호출(입력된 값이 벡터로 들어가)
 
-			account_date_textfield.addKeyListener(new KeyAdapter()
+		
+		account_date_textfield.addKeyListener(new KeyAdapter()
 		{
 			
 
@@ -89,44 +155,68 @@ public class Add_account_history 	//Class AccountWrite
 		      if ( !(  (c >= '0') && (c <= '9') || (c == KeyEvent.VK_BACK_SPACE) || (c == KeyEvent.VK_DELETE) || (c == KeyEvent.VK_SLASH)  )  )    // 
 		      {
 		        JOptionPane.showMessageDialog(null, "Please Enter Valid");
-		   //     account_date_textfield.setText(account_dateFormat.format(account_date));
+		   //필요없어     account_date_textfield.setText(account_dateFormat.format(account_date));
 		        //e.consume();
+		        account_date_textfield.setText(""+account_dateFormat.format(account_date_date)+"");
 		      }
       
 		    }
 		    
+		    
 		  });
 
 			
-	/*	 account_add_yes_btn.addActionListener(new ActionListener(){
+		//	MouseListener listener = new MouseEventHandler();
+		
+	//		listener.mouseClicked()
+	//		account_add_yes_btn.addMouseListener(listener);
+	
+	//	ActionListener listener_btn = new ActionListener();
+		 account_add_yes_btn.addActionListener(new ActionListener() {
 			   @SuppressWarnings("deprecation")
-			public void actionPerformed(ActionEvent ae)
+			   String str="";
+			   
+			@SuppressWarnings("null")
+			public void actionPerformed(ActionEvent ae)//, String s) 
 			   {
-				   
-				   setAccountDate(account_add_index,account_date_textfield.getText());
-
-	/*			   try 
-				   {
+			//	   int account_index=0;
+				   int test_account_index = 0;
+				   String str = account_date_textfield.getText();
+				   System.out.println(str);
+				   this.str=str;
+				   account_date.set(test_account_index, str);
+			//	   outStr();
+	//			   account_date.set(test_account_index, str);
+	//			   System.out.println(account_date.get(test_account_index));
+	//			   test_account_index++;
+	//			   try 
+	//			   {
 					   
-					   setAccountDate(account_add_index,account_date_textfield.getText());
+	//				   setAccountDate(account_add_index,account_date_textfield.getText());
 					   
 					   
-				   } 
-				   catch (ParseException e) 
-				   {
+	//			   } 
+		//		   catch (ParseException e) 
+		//		   {
 					// TODO Auto-generated catch block
-					   e.printStackTrace();
-				   }
+			//		   e.printStackTrace();
+			//	   }
 				   
 			  //    account_date_textfield.setText(account_date_textfield.getText());
 			      
 			
 			      // .... do some operation on value ...
 			   }
+			public String outStr()
+			{
+		//		this.str=str;
+				return this.str;
+			}
 			});
-	*/	 
-	//	setAccountDate(account_add_index,account_date_textfield.);
-	//	System.out.println(account_date.get(account_add_index));
+		 
+		 
+//		setAccountDate(account_add_index,account_date_textfield.getText());
+//		System.out.println(account_date.getDate());
 		
 		
 		

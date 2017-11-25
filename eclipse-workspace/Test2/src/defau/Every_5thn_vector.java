@@ -5,8 +5,11 @@ import java.awt.event.*;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.Collection;
 import java.util.Date;
+import java.util.Locale;
 import java.util.Scanner;
 import java.util.Vector;
 
@@ -19,13 +22,19 @@ public class Every_5thn_vector
 	public static Vector <String> account_item = new Vector<String>();
 	public static Vector <Integer> account_price = new Vector<Integer>();
 
+	public static int method_calling_add=0;
+	public static int method_calling_delete=0;
+	public static int method_calling_sum=0;
+
+	
 	@SuppressWarnings("deprecation")
-	public static void main(String[] args) 
+	public static void main(String[] args) throws ParseException 
 	{
 //		Vector <JButton> account_modify_btn = new Vector<JButton>();
 //		Vector <JButton> account_delete_btn = new Vector<JButton>();
+
 		
-		int max_account_item_string_length=0;
+		int max_table_string_length=0;
 		
 		int account_table_column = 6+1;	//이건 나중에 set 호출한 횟수 혹은 추가 버튼 누른 횟수로 받아온다.
 		int account_table_row = 5;
@@ -55,7 +64,7 @@ public class Every_5thn_vector
 		account_main_frame.setLayout(null);
 	//	account_main_frame.setLayout(new FlowLayout());
 	
-		account_main_frame.getContentPane().setBackground(Color.WHITE);;
+		account_main_frame.getContentPane().setBackground(Color.WHITE);
 		
 		account_table_pannel.setLayout(null);
 
@@ -100,23 +109,26 @@ public class Every_5thn_vector
 		{
 			
 	//		account_date.add(getAccountDate(i));//	get으로 Date 받아온다.
-			account_date.add(i+"th day");			//나중에 date함수로 받아오기
+	//		account_date.add(i+"th day");			//나중에 date함수로 받아오기
+			setAccountDate(i, "2011/11/11");
 			account_table_label[i][0] = new JLabel(account_date.get(i));
 			account_table_label[i][0].setSize(80, 35);
 
 			
 	//		account_item.add(getAccountItem(i));
-			account_item.add(i*1000000+"stuff");	//나중에 받아와
+	//		account_item.add(i*1000000+"stuff");	//나중에 받아와
+			setAccountItem(i,"things");
 	//		account_table_label_item[i] = new JLabel(account_item.get(i));
 			account_table_label[i][1] = new JLabel(account_item.get(i));
-			if(max_account_item_string_length<account_item.get(i).length())
+			if(max_table_string_length<account_item.get(i).length())
 			{
-				max_account_item_string_length = account_item.get(i).length();	//나중에 재정의
+				max_table_string_length = account_item.get(i).length();	//나중에 재정의
 			}
-			account_table_label[i][1].setSize(max_account_item_string_length+10, 35);
+			account_table_label[i][1].setSize(max_table_string_length+10, 35);
 			
 			
-			account_price.add(i*1500);
+	//		account_price.add(i*1500);
+			setAccountPrice(i,i*10000000);
 			account_table_label[i][2] = new JLabel(account_price.get(i)+"won");
 			account_table_label[i][2].setSize(80, 35);
 			
@@ -134,7 +146,7 @@ public class Every_5thn_vector
 	//		account_modify_button[i].setBackground(null);
 			account_modify_button[i].setBackground(Color.lightGray);
 			account_modify_button[i].setBorder(null);
-			account_modify_button[i].setBounds((max_account_item_string_length*6+64)/2-35, 5, 70, 25);
+			account_modify_button[i].setBounds((max_table_string_length*6+64)/2-35, 5, 70, 25);
 			account_table_label[i][3].add(account_modify_button[i]);
 			
 			
@@ -145,7 +157,7 @@ public class Every_5thn_vector
 		//	account_delete_button[i].setBackground(null);
 //			account_delete_button[i].setSize(75, 30);
 		//	account_delete_button[i].setBounds(5, 5, 70, 25);
-			account_delete_button[i].setBounds((max_account_item_string_length*6+64)/2-35, 5, 70, 25);
+			account_delete_button[i].setBounds((max_table_string_length*6+64)/2-35, 5, 70, 25);
 			account_delete_button[i].setBorder(null);
 			account_table_label[i][4].add(account_delete_button[i]);
 
@@ -167,13 +179,13 @@ public class Every_5thn_vector
 			}
 		}
 		
-		account_table_column = account_date.size();
+	//	account_table_column = account_date.size();
 		
-		account_main_frame_width = 100+((account_table_row-1)*80+max_account_item_string_length*30);
+		account_main_frame_width = 100+((account_table_row-1)*80+max_table_string_length*30);
 		account_main_frame_height = ((account_table_column*35)+250);
 		account_main_frame.setBounds(120,120,account_main_frame_width,account_main_frame_height);
 		
-		account_table_pannel.setBounds(50, 100, ((account_table_row-1)*80+max_account_item_string_length*30), (account_table_column*35));
+		account_table_pannel.setBounds(50, 100, ((account_table_row-1)*80+max_table_string_length*30), (account_table_column*35));
 		
 		
 		
@@ -237,7 +249,7 @@ public class Every_5thn_vector
 
 		return account_date.get(edit_index);
 	}
-	public void setAccountDate(int edit_index, String edit_date) throws ParseException
+	public static void setAccountDate(int edit_index, String edit_date) throws ParseException
 	{
 	//	Vector <String> account_date;
 	//	SimpleDateFormat account_date_sdf = new SimpleDateFormat("yyyy/MM/dd");
@@ -247,12 +259,23 @@ public class Every_5thn_vector
 	//	DateFormat account_date_dateformat = new SimpleDateFormat("dd/MM/yyyy");
 	//	String account_date_string = account_date_dateformat.format(new Date(20100000+edit_index*1000));
 	//	account_date_string="init_date"+edit_index+"th";
+	
+	/*	
 		DateFormat account_date_format = new SimpleDateFormat("yyyy/MM/dd");
 		Date account_date_date = account_date_format.parse(edit_date);
-
-		account_date.set(edit_index, account_date_format.format(account_date_date));
 		
+		System.out.println(account_date_format.format(account_date_date));
+		account_date.set(edit_index, account_date_format.format(account_date_date));
+*/
+		
+		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy/MM/dd", Locale.ENGLISH);
+		LocalDate account_date_localDate = LocalDate.parse(edit_date, formatter);
+		System.out.println(account_date_localDate);
+//		account_date.set(edit_index, formatter.format(account_date_localDate));
+		account_date.add(edit_index,formatter.format(account_date_localDate));
+		method_calling_add++;
 /*	
+ 
 		DateFormat df = new SimpleDateFormat("MM/dd/yyyy");
 		JFormattedTextField txtDate = new JFormattedTextField(df);
 		txtDate .addKeyListener(new KeyAdapter() {
@@ -270,25 +293,24 @@ public class Every_5thn_vector
 		account_date.add(edit_index, edit_date);
 */
 	}
-	public static String getAccountItem(int edit_index)
+//	public static String getAccountItem(int edit_index)
+//	{
+//		String account_item_string="init_item";
+//		return account_item_string;
+//	}
+	public static void setAccountItem(int edit_index, String edit_item)
 	{
-		String account_item_string="init_item";
-		return account_item_string;
+		account_item.add(edit_index, edit_item);
 	}
-/*	public void setAccountItem(int edit_index, String edit_item)
-	{
-		
-	}
-	public int getAccountPrice(int edit_index)
-	{
-		
-	}
-	public int setAccountPrice(int edit_index, int edit_price)
+/*	public int getAccountPrice(int edit_index)
 	{
 		
 	}
-	
-*/	
+*/	public static void setAccountPrice(int edit_index, int edit_price)
+	{
+		account_price.add(edit_index, edit_price);
+	}
+		
 	
 	public static JButton createButton()
 	{
