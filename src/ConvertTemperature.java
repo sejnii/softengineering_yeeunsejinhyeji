@@ -3,8 +3,13 @@ import java.awt.Font;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 
 import javax.swing.*;
+import javax.swing.text.AttributeSet;
+import javax.swing.text.BadLocationException;
+import javax.swing.text.PlainDocument;
 
 public class ConvertTemperature extends JFrame implements ActionListener {
 
@@ -16,6 +21,8 @@ public class ConvertTemperature extends JFrame implements ActionListener {
 	int flag;
 	public ConvertTemperature(){
 		
+		
+		start();
 		paneltitle = new JPanel();
 		panelselect = new JPanel();
 		panelcon = new JPanel();
@@ -56,6 +63,9 @@ public class ConvertTemperature extends JFrame implements ActionListener {
 		panelcon.add(btconvert);
 		panelcon.add(tfsecond);
 		panelcon.add(lbsecond);
+		
+		tffirst.setDocument(new JTextFieldLimit(10));
+		
 		////////////////////////////////////////////////
 		
 		setLayout(new GridLayout(3,1, 0, 20));
@@ -64,17 +74,52 @@ public class ConvertTemperature extends JFrame implements ActionListener {
 		add(panelcon);
 		setTitle("Temperature Conversion");
 		setSize(500, 300);
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);	
+		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);	
 		setVisible(true);
 		setResizable(false);
 	
 		
 		
 	}
+	public void start(){
+		this.addWindowListener(new WindowAdapter(){
+			public void windowClosing(WindowEvent e){
+				setVisible(false);
+				dispose();
+			}
+		});
+			
+			
+		
+	}
+	class JTextFieldLimit extends PlainDocument {
+		  private int limit;
+		  JTextFieldLimit(int limit) {
+		    super();
+		    this.limit = limit;
+		  }
+
+		  JTextFieldLimit(int limit, boolean upper) {
+		    super();
+		    this.limit = limit;
+		  }
+
+		  public void insertString(int offset, String str, AttributeSet attr) throws BadLocationException {
+		    if (str == null)
+		      return;
+
+		    if ((getLength() + str.length()) <= limit) {
+		      super.insertString(offset, str, attr);
+		    }
+		  }
+		}
+
+	
 	
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
-		new ConvertTemperature();
+		JFrame frame = new ConvertTemperature();
+		
 
 	}
 
