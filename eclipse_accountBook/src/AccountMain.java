@@ -1,4 +1,3 @@
-
 import java.awt.*;
 import java.awt.event.*;
 import java.text.DateFormat;
@@ -14,20 +13,20 @@ import java.util.Vector;
 import javax.swing.*;
 import javax.swing.border.Border;
 
-class AccountMain
+class AccountMain() thcolumns ParseException
 {
 	public static Vector <String> account_date = new Vector<String>();
 	public static Vector <String> account_item = new Vector<String>();
 	public static Vector <Integer> account_price = new Vector<Integer>();
 	
 	
-	public AccountMain() throws ParseException
+	public AccountMain()
 	{
 		/**************variable settings**************/
 		int max_table_string_length=0;
 		
-		int account_table_column = 6+1;		//6:transction times, 1:first row for menu(Date, Item name, Price)
-		int account_table_row = 5;
+		int account_table_row = 6+1;		//6:transction times, 1:first column for menu(Date, Item name, Price)
+		int account_table_column = 5;
 		int account_main_frame_width;
 		int account_main_frame_height;
 	
@@ -35,8 +34,8 @@ class AccountMain
 		JPanel account_table_pannel = new JPanel();
 		JLabel account_title_label = new JLabel("Account Book");
 		JLabel[][] account_table_label;
-		JButton[] account_modify_button = new JButton[account_table_column];
-		JButton[] account_delete_button = new JButton[account_table_column];
+		JButton[] account_modify_button = new JButton[account_table_row];
+		JButton[] account_delete_button =  new JButton[account_table_row];
 		JButton refresh_button;
 		JButton add_deal_button = new JButton("Add transaction history");
 		
@@ -53,14 +52,14 @@ class AccountMain
 		account_main_frame.setLayout(null);
 		account_main_frame.getContentPane().setBackground(Color.WHITE);
 		
-		account_table_pannel.setLayout(new GridLayout(account_table_column,account_table_row));
+		account_table_pannel.setLayout(new GridLayout(account_table_row,account_table_column));
 		account_table_pannel.setBorder(BorderFactory.createLineBorder(Color.WHITE));
 		account_table_pannel.setBackground(Color.WHITE);
 		
-		account_table_label = new JLabel[account_table_column][account_table_row];
+		account_table_label = new JLabel[account_table_row][account_table_column];
 		
 		
-		/**************account label(table) first line(column) setting: meaning of each row**************/
+		/**************account label(table) first line(row) setting: meaning of each column**************/
 		account_date.add("date");
 		account_item.add("item");
 		account_price.add(null);
@@ -71,90 +70,90 @@ class AccountMain
 		account_table_label[0][3]= new JLabel("Modify");
 		account_table_label[0][4]= new JLabel("Delete");
 		
-		for(int first_column_setting_int=0; first_column_setting_int<5; first_column_setting_int++)
+		for(int first_row_setting_int=0; first_row_setting_int<5; first_row_setting_int++)
 		{
-			account_table_label[0][first_column_setting_int].setBorder(BorderFactory.createLineBorder(Color.LIGHT_GRAY));
-			account_table_pannel.add(account_table_label[0][first_column_setting_int]);
+			account_table_label[0][first_row_setting_int].setBorder(BorderFactory.createLineBorder(Color.LIGHT_GRAY));
+			account_table_pannel.add(account_table_label[0][first_row_setting_int]);
 
-			account_table_label[0][first_column_setting_int].setVerticalAlignment(SwingConstants.CENTER);
-			account_table_label[0][first_column_setting_int].setHorizontalAlignment(SwingConstants.CENTER);
-			account_table_label[0][first_column_setting_int].setFont(new Font("Courier New", Font.PLAIN, 15));
+			account_table_label[0][first_row_setting_int].setVerticalAlignment(SwingConstants.CENTER);
+			account_table_label[0][first_row_setting_int].setHorizontalAlignment(SwingConstants.CENTER);
+			account_table_label[0][first_row_setting_int].setFont(new Font("Courier New", Font.PLAIN, 15));
 		}
 		
 		
 		
-		/**************account label(table) main setting (except first column)**************/
-		for (int table_column_int=1; table_column_int<account_table_column;table_column_int++)
+		/**************account label(table) main setting (except first row)**************/
+		for (int table_row_int=1; table_row_int<account_table_row;table_row_int++)
 		{
 			//first column show: Date 
-			setAccountDate(table_column_int, "2011/11/11");
-			account_table_label[table_column_int][0] = new JLabel(account_date.get(table_column_int));
-			account_table_label[table_column_int][0].setSize(80, 35);
+			setAccountDate(table_row_int, "2011/11/11");
+			account_table_label[table_row_int][0] = new JLabel(account_date.get(table_row_int));
+			account_table_label[table_row_int][0].setSize(80, 35);
 
 			
-			//secont column show: Item (+define the max length of one row in table)
-			setAccountItem(table_column_int,"things");
-			account_table_label[table_column_int][1] = new JLabel(account_item.get(table_column_int));
-			if(max_table_string_length<account_item.get(table_column_int).length())
+			//secont column show: Item (+define the max length of one column in table)
+			setAccountItem(table_row_int,"things");
+			account_table_label[table_row_int][1] = new JLabel(account_item.get(table_row_int));
+			if(max_table_string_length<account_item.get(table_row_int).length())
 			{
-				max_table_string_length = account_item.get(table_column_int).length();	
+				max_table_string_length = account_item.get(table_row_int).length();	
 			}
-			account_table_label[table_column_int][1].setSize(max_table_string_length+10, 35);
+			account_table_label[table_row_int][1].setSize(max_table_string_length+10, 35);
 			
 			
 			//third column show: Price
-			setAccountPrice(table_column_int,table_column_int*1000);
-			account_table_label[table_column_int][2] = new JLabel(account_price.get(table_column_int)+"won");
-			account_table_label[table_column_int][2].setSize(80, 35);
+			setAccountPrice(table_row_int,table_row_int*1000);
+			account_table_label[table_row_int][2] = new JLabel(account_price.get(table_row_int)+"won");
+			account_table_label[table_row_int][2].setSize(80, 35);
 			
 			
 			//forth column show: Modify button
-			account_table_label[table_column_int][3] = new JLabel();
-			account_table_label[table_column_int][3].setSize(80, 35);
-			account_modify_button[table_column_int] = new JButton("Click");
-//			account_modify_button[table_column_int].setSize(70, 25);
-//			account_modify_button[table_column_int].setBackground(null);
-			account_modify_button[table_column_int].setBackground(Color.lightGray);
-			account_modify_button[table_column_int].setBorder(null);
-			account_modify_button[table_column_int].setBounds((max_table_string_length*6+64)/2-35, 5, 70, 25);
-			account_table_label[table_column_int][3].add(account_modify_button[table_column_int]);
+			account_table_label[table_row_int][3] = new JLabel();
+			account_table_label[table_row_int][3].setSize(80, 35);
+			account_modify_button[table_row_int] = new JButton("Click");
+//			account_modify_button[table_row_int].setSize(70, 25);
+//			account_modify_button[table_row_int].setBackground(null);
+			account_modify_button[table_row_int].setBackground(Color.lightGray);
+			account_modify_button[table_row_int].setBorder(null);
+			account_modify_button[table_row_int].setBounds((max_table_string_length*6+64)/2-35, 5, 70, 25);
+			account_table_label[table_row_int][3].add(account_modify_button[table_row_int]);
 			
 			
 			//fifth column show: Delete button
-			account_table_label[table_column_int][4] = new JLabel();
-			account_table_label[table_column_int][4].setSize(80, 35);
-			account_delete_button[table_column_int] = new JButton("Click");
-			account_delete_button[table_column_int].setBackground(Color.lightGray);
-//			account_delete_button[table_column_int].setBackground(null);
-//			account_delete_button[table_column_int].setSize(75, 30);
-//			account_delete_button[table_column_int].setBounds(5, 5, 70, 25);
-			account_delete_button[table_column_int].setBounds((max_table_string_length*6+64)/2-35, 5, 70, 25);
-			account_delete_button[table_column_int].setBorder(null);
-			account_table_label[table_column_int][4].add(account_delete_button[table_column_int]);
+			account_table_label[table_row_int][4] = new JLabel();
+			account_table_label[table_row_int][4].setSize(80, 35);
+			account_delete_button[table_row_int] = new JButton("Click");
+			account_delete_button[table_row_int].setBackground(Color.lightGray);
+//			account_delete_button[table_row_int].setBackground(null);
+//			account_delete_button[table_row_int].setSize(75, 30);
+//			account_delete_button[table_row_int].setBounds(5, 5, 70, 25);
+			account_delete_button[table_row_int].setBounds((max_table_string_length*6+64)/2-35, 5, 70, 25);
+			account_delete_button[table_row_int].setBorder(null);
+			account_table_label[table_row_int][4].add(account_delete_button[table_row_int]);
 			
 			
 			
-			//set the font and alignment in all table
-			for(int table_row_int=0; table_row_int<account_table_row; table_row_int++)
+			//set the font and alignment in all table label
+			for(int table_column_int=0; table_column_int<account_table_column; table_column_int++)
 			{
-				account_table_label[table_column_int][table_row_int].setFont(new Font("Courier New", Font.PLAIN, 15));
+				account_table_label[table_row_int][table_column_int].setFont(new Font("Courier New", Font.PLAIN, 15));
 
-				account_table_label[table_column_int][table_row_int].setVerticalAlignment(SwingConstants.CENTER);
-				account_table_label[table_column_int][table_row_int].setHorizontalAlignment(SwingConstants.CENTER);
-	//			account_table_label[table_column_int][table_row].getBounds();
-				account_table_label[table_column_int][table_row_int].setBorder(BorderFactory.createLineBorder(Color.LIGHT_GRAY));
-				account_table_pannel.add(account_table_label[table_column_int][table_row_int]);
+				account_table_label[table_row_int][table_column_int].setVerticalAlignment(SwingConstants.CENTER);
+				account_table_label[table_row_int][table_column_int].setHorizontalAlignment(SwingConstants.CENTER);
+	//			account_table_label[table_row_int][table_column].getBounds();
+				account_table_label[table_row_int][table_column_int].setBorder(BorderFactory.createLineBorder(Color.LIGHT_GRAY));
+				account_table_pannel.add(account_table_label[table_row_int][table_column_int]);
 			}
 		}
 		
 		
 		/**************design settings**************/
 		//main frame &  setting: concerning string length in table
-		account_main_frame_width = 100+((account_table_row-1)*80+max_table_string_length*30);
-		account_main_frame_height = ((account_table_column*35)+250);
+		account_main_frame_width = 100+((account_table_column-1)*80+max_table_string_length*30);
+		account_main_frame_height = ((account_table_row*35)+250);
 		account_main_frame.setBounds(120,120,account_main_frame_width,account_main_frame_height);
 		
-		account_table_pannel.setBounds(50, 100, ((account_table_row-1)*80+max_table_string_length*30), (account_table_column*35));
+		account_table_pannel.setBounds(50, 100, ((account_table_column-1)*80+max_table_string_length*30), (account_table_row*35));
 		
 		
 		//main title label setting
@@ -198,7 +197,7 @@ class AccountMain
 	
 	
 	
-	public static void setAccountDate(int edit_index, String edit_date) throws ParseException
+	public static void setAccountDate(int edit_index, String edit_date) thcolumns ParseException
 	{
 		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy/MM/dd", Locale.ENGLISH);
 		LocalDate account_date_localDate = LocalDate.parse(edit_date, formatter);
@@ -215,7 +214,7 @@ class AccountMain
 		account_price.add(edit_index,edit_price);
 	}
 	
-	//maybe do no need: get functions		//just use: account_date.get(index_number);
+	//maybe do no need: get functions		//just use:    account_date.get(index_number);
 	public static String getAccountDate(int edit_index)
 	{
 		return account_date.get(edit_index);
@@ -229,4 +228,3 @@ class AccountMain
 		return account_price.get(edit_index);
 	}
 }
-
