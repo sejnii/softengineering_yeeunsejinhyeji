@@ -20,7 +20,12 @@ class AccountMain
 	public static Vector <Integer> account_price = new Vector<Integer>();
 	
 	public static int account_table_row=0+1;
+	public static int account_table_column = 5;
 	public static int max_table_string_length=0;
+	public static JLabel[][] account_table_label= new JLabel[account_table_row][account_table_column];
+	
+	public static int account_main_frame_width;
+	public static int account_main_frame_height;
 	
 	public AccountMain()
 	{
@@ -28,18 +33,19 @@ class AccountMain
 
 		
 //		int account_table_row = 6+1;		//6:transction times, 1:first column for menu(Date, Item name, Price)
-		int account_table_column = 5;
-		int account_main_frame_width;
-		int account_main_frame_height;
+	
+
 	
 		JFrame account_main_frame = new JFrame("Account Book");
 		JPanel account_table_pannel = new JPanel();
 		JLabel account_title_label = new JLabel("Account Book");
-		JLabel[][] account_table_label;
+
 		JButton[] account_modify_button = new JButton[account_table_row];
 		JButton[] account_delete_button =  new JButton[account_table_row];
 		JButton refresh_button;
 		JButton add_deal_button = new JButton("Add transaction history");
+		
+		account_table_label = new JLabel[account_table_row][account_table_column];
 		
 		
 		/**************set the refresh icon in refresh button**************/
@@ -58,7 +64,7 @@ class AccountMain
 		account_table_pannel.setBorder(BorderFactory.createLineBorder(Color.WHITE));
 		account_table_pannel.setBackground(Color.WHITE);
 		
-		account_table_label = new JLabel[account_table_row][account_table_column];
+//		account_table_label = new JLabel[account_table_row][account_table_column];
 		
 		
 		/**************account label(table) first line(row) setting: meaning of each column**************/
@@ -224,14 +230,31 @@ class AccountMain
 	//	refresh_button.setBackground(Color.LIGHT_GRAY);
 		refresh_button.setBackground(null);
 		account_main_frame.add(refresh_button );
+		
 		int before_add_row=account_table_row;
 		refresh_button.addActionListener(new ActionListener()
 		{
 		      public void actionPerformed(ActionEvent e) 
 		      {
-	
+		    		
+		    		
+		    		account_table_label = new JLabel[account_table_row][account_table_column];
+					System.out.println(account_table_row+";;"+account_date.get(account_table_row-1));
+
+
+		  		account_table_pannel.setLayout(new GridLayout(0,account_table_column));
+//		    	  account_table_label =new JLabel[account_table_row][account_table_column];
+				JButton[] account_modify_button = new JButton[account_table_row];
+				JButton[] account_delete_button =  new JButton[account_table_row];
+			
+		  		
 		    	for(int i=before_add_row; i<account_table_row; i++)
 				{
+		    		account_table_label = new JLabel[account_table_row][5];
+		    		
+		    		System.out.println("in for");
+		    		System.out.println(";;before row"+before_add_row+";;");
+		    		System.out.println(";;row;;;;"+account_table_row+";;");
 					account_table_label[i][0]=new JLabel(account_date.get(i));
 					account_table_label[i][1]=new JLabel(account_item.get(i));
 					account_table_label[i][2]=new JLabel(account_price.get(i)+"won");
@@ -252,7 +275,10 @@ class AccountMain
 						account_delete_button[i].setBounds((max_table_string_length*6+64)/2-35, 5, 70, 25);
 						account_delete_button[i].setBorder(null);
 						account_table_label[i][4].add(account_delete_button[i]);
+				
+				
 						
+//						account_table_row=account_date.size();	
 						
 					
 					for (int k=0; k<5; k++)
@@ -273,6 +299,13 @@ class AccountMain
 		        System.out.println("refresh OK");
 				System.out.println(account_table_row+";;"+account_date.get(account_table_row-1));
 		
+				
+				account_main_frame_width = 100+((account_table_column-1)*80+max_table_string_length*30);
+				account_main_frame_height = ((account_table_row*35)+250);
+				account_main_frame.setBounds(120,120,account_main_frame_width,account_main_frame_height);
+				
+				account_table_pannel.setBounds(50, 100, ((account_table_column-1)*80+max_table_string_length*30), (account_table_row*35));
+				
 
 		      }
 		    });
@@ -295,21 +328,38 @@ class AccountMain
 	
 	public static void setAccountDate(int edit_index, String edit_date) 
 	{
-		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy/MM/dd", Locale.ENGLISH);
-		LocalDate account_date_localDate = LocalDate.parse(edit_date, formatter);
+	
+		account_date.set(edit_index,edit_date);
+
+	}
+	public static void setAccountDate(String edit_date) 
+	{
+		int size=account_date.size();
+		account_date.setSize(size+1);
+		account_date.set(size, edit_date);
 		
-		account_date.add(edit_index,formatter.format(account_date_localDate));
 
 	}
 	public static void setAccountItem(int edit_index, String edit_item)
 	{
-		account_item.add(edit_index,edit_item);
+		account_item.setElementAt(edit_item, edit_index);
 	}
-	public static void setAccountPrice(int edit_index, int edit_price)
-	{
-		account_price.add(edit_index,edit_price);
+	public static void setAccountItem(String edit_item)
+	{	int size=account_item.size();
+	account_item.setSize(size+1);
+	account_item.set(size, edit_item);
 	}
 	
+	public static void setAccountPrice(int edit_index, int edit_price)
+	{
+		account_price.set(edit_index,edit_price);
+	}
+	public static void setAccountPrice(int edit_price)
+	{
+		int size=account_price.size();
+		account_price.setSize(size+1);
+		account_price.set(size, edit_price);
+	}
 	//maybe do no need: get functions		//just use:    account_date.get(index_number);
 	public static String getAccountDate(int edit_index)
 	{

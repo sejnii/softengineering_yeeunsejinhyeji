@@ -80,36 +80,56 @@ public class AccountWrite
 				public void mouseClicked(MouseEvent e)
 				{
 
-					
+		//			int index;
 					int account_add_yes_int = JOptionPane.showConfirmDialog(null,"Are you sure to add this?", "Add confirm", JOptionPane.YES_NO_OPTION);
 					if (account_add_yes_int == JOptionPane.YES_OPTION)
-					{
+					{		
+		//				AccountMain account_main = new AccountMain();
+						
 						add_account_confirm_boolean=true;
-						add_account_date=account_date_textfield.getText();
-						add_account_item=account_item_textfield.getText();
-						add_account_price=Integer.parseInt(account_price_textfield2.getText());
-						
-						add_test_show_label.setText(add_account_date+";"
-													+add_account_item+";"
-													+add_account_price);
-						
-						AccountMain.account_table_row++;
-						add_test_show_label.setText(add_test_show_label.getText()+";;"
-								+AccountMain.account_table_row);
-						
-						AccountMain.account_date.setSize(AccountMain.account_table_row);
-						AccountMain.account_date.set(AccountMain.account_table_row-1, add_account_date);
-
-						AccountMain.account_item.setSize(AccountMain.account_table_row);
-						AccountMain.account_item.set(AccountMain.account_table_row-1, add_account_item);
-						
-						AccountMain.account_price.setSize(AccountMain.account_table_row);
-						AccountMain.account_price.set(AccountMain.account_table_row-1, add_account_price);
-						
-						add_test_show_label.setText(add_test_show_label.getText()+";;"
-								+AccountMain.account_table_row);
-						
+					add_account_date=account_date_textfield.getText();
+					add_account_item=account_item_textfield.getText();
+					add_account_price=Integer.parseInt(account_price_textfield2.getText());
 					
+					add_test_show_label.setText(add_account_date+";"
+												+add_account_item+";"
+												+add_account_price);
+					
+					AccountMain.account_table_row++;
+					add_test_show_label.setText(add_test_show_label.getText()+";;"
+							+AccountMain.account_table_row);
+					
+/*					AccountMain.account_date.setSize(AccountMain.account_table_row);
+					AccountMain.account_date.set(AccountMain.account_table_row-1, add_account_date);
+					
+					AccountMain.account_item.setSize(AccountMain.account_table_row);
+					AccountMain.account_item.set(AccountMain.account_table_row-1, add_account_item);
+					
+					AccountMain.account_price.setSize(AccountMain.account_table_row);
+					AccountMain.account_price.set(AccountMain.account_table_row-1, add_account_price);
+					
+					add_test_show_label.setText(add_test_show_label.getText()+";;"
+							+AccountMain.account_table_row);
+	*/			
+	/*				account_main.account_table_row++;
+					index=	account_main.account_table_row++;
+					account_main.account_date.setSize(index);
+					account_main.setAccountDate(index, add_account_date);
+					
+					account_main.account_item.setSize(index);
+					account_main.setAccountItem(index, add_account_item);
+					
+					account_main.account_price.setSize(index);
+					account_main.setAccountPrice(index, add_account_price);
+				*
+				*/
+				//	index=AccountMain.account_table_row;
+					
+					AccountMain.setAccountDate(add_account_date);
+					AccountMain.setAccountItem(add_account_item);
+					AccountMain.setAccountPrice(add_account_price);
+					
+		//				new AccountMain();
 						
 				/*		AccountMain account_main =new AccountMain();
 						account_main.account_date.setSize(account_main.account_table_row++);
