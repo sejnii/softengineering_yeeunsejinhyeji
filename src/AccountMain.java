@@ -347,7 +347,7 @@ class AccountMain
 	}
 	
 	
-	
+	/////////세진수정/////////////////////////////
 	
 	public static void setAccountDate(int edit_index, String edit_date) 
 	{
@@ -383,6 +383,8 @@ class AccountMain
 		account_price.setSize(size+1);
 		account_price.set(size, edit_price);
 	}
+	
+	////////////////////////여기까지///////////////////////////////////////////
 	//maybe do no need: get functions		//just use:    account_date.get(index_number);
 	public static String getAccountDate(int edit_index)
 	{
@@ -396,4 +398,7 @@ class AccountMain
 	{
 		return account_price.get(edit_index);
 	}
+	
+	
+	
 }

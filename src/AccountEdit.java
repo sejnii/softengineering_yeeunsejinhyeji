@@ -23,12 +23,7 @@ import javax.swing.text.PlainDocument;
 public class AccountEdit
 {
 
-	public static void main(String[] args) 
-	{
-
 	
-		
-	}
 	public AccountEdit(int edit_index) {
 		
 		JFrame account_modify_frame = new JFrame("Modify");
