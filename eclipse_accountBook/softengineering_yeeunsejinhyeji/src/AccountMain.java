@@ -52,7 +52,7 @@ class AccountMain() thcolumns ParseException
 		account_main_frame.setLayout(null);
 		account_main_frame.getContentPane().setBackground(Color.WHITE);
 		
-		account_table_pannel.setLayout(new GridLayout(account_table_row,account_table_column));
+		account_table_pannel.setLayout(new GridLayout(0,account_table_column));
 		account_table_pannel.setBorder(BorderFactory.createLineBorder(Color.WHITE));
 		account_table_pannel.setBackground(Color.WHITE);
 		
