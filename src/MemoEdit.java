@@ -1,18 +1,19 @@
-import java.awt.BorderLayout;
-import java.awt.Component;
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+
 import javax.swing.*;
 
-public class MemoWrite extends JFrame implements ActionListener{
+public class MemoEdit extends JFrame implements ActionListener {
 	
-	JPanel panel, ptitle, ptfmemo, pbtnsave;
+	JPanel panel, ptitle, ptfmemo, pbtnrevise;
 	JLabel lbtitle, lblimit;
-	JButton btnsave;
+	JButton btnrevise;
 	JTextField tfmemo;
+	private static int edit_index;
 	
-	public MemoWrite() {
-		setTitle("MemoWrite");
+	public MemoEdit(int edit_index) {
+		setTitle("MemoEdit");
 		setSize(500,300);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		
@@ -24,7 +25,7 @@ public class MemoWrite extends JFrame implements ActionListener{
 		
 		lbtitle = new JLabel("메모 작성");
 		lbtitle.setAlignmentX(Component.CENTER_ALIGNMENT);
-		lblimit = new JLabel("메모는 20자 이내로 작성해주세요.");
+		lblimit = new JLabel("메모는 20자 이내로 수정해주세요.");
 		lblimit.setAlignmentX(Component.CENTER_ALIGNMENT);
 		ptitle.add(lbtitle);
 		ptitle.add(lblimit);
@@ -32,37 +33,36 @@ public class MemoWrite extends JFrame implements ActionListener{
 		
 		ptfmemo = new JPanel();
 		tfmemo = new JTextField(30);
+		tfmemo.setText(MemoMain.getMemoContent(edit_index));
 		ptfmemo.add(tfmemo);
 		panel.add(ptfmemo,BorderLayout.CENTER);
 		
-		pbtnsave = new JPanel();
-		btnsave = new JButton("저장");
-		btnsave.addActionListener(this);
-		pbtnsave.add(btnsave);
-		panel.add(pbtnsave, BorderLayout.PAGE_END);
+		pbtnrevise = new JPanel();
+		btnrevise = new JButton("저장");
+		btnrevise.addActionListener(this);
+		pbtnrevise.add(btnrevise);
+		panel.add(pbtnrevise, BorderLayout.PAGE_END);
 		
 		add(panel);
 		setVisible(true);
-		
 	}
+	
 	
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
-		new MemoWrite();
-		
+		new MemoEdit(edit_index);
 	}
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		// TODO Auto-generated method stub
-		
 		Object source = e.getSource();
-			
-		if(source == btnsave) {
-			MemoMain.setMemoContent(tfmemo.getText());
+		
+		if(source == btnrevise) {
+			MemoMain.setMemoContent(edit_index, tfmemo.getText());
+			System.out.println(tfmemo.getText());
 			this.dispose();
 		}
-		
 	}
 
 }

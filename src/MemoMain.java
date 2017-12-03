@@ -15,24 +15,25 @@ import javax.swing.text.PlainDocument;
 
 
 public class MemoMain extends JFrame implements ActionListener {
+	int previouslist=0;
 	static JFrame frame;
-	JLabel lbtitle;
+	JLabel lbtitle, check;
 	JButton btnrevalidate, btnwrite;
-	//JButton btnrevise[], btndelete[];
-	JPanel panel, ptop, prefresh, pmemo, previse, pdelete, pbottom;
-	JTextField memo;
-	//JLabel lbmemo;
-	//DefaultListModel memomodel;
+	JButton[] btnrevise, btndelete;
+	JPanel panel, ptop, prefresh, pmemo, pcenter, plineend, pbottom;
 	JLabel[][] memo_table_label;
+	//JLabel[] check1, check2;
 	static Vector<String> memo_content;
 	int memocnt=0;
-	int edit_index;
+	static int edit_index;
+	int memo_table_row = 15;
+	int memo_table_column=3;
 	
-	public String getMemoContent(int edit_index) {
+	public static String getMemoContent(int edit_index) {
 		return memo_content.elementAt(edit_index);
 	}
 	
-	public void setMemoContent(int edit_index, String edit_content) {
+	public static void setMemoContent(int edit_index, String edit_content) {
 		memo_content.setElementAt(edit_content, edit_index);
 	}
 	
@@ -47,8 +48,6 @@ public class MemoMain extends JFrame implements ActionListener {
 		
 		memo_content = new Vector<String>();
 		
-		//memo_content.addElement("SS");
-
 		panel = new JPanel();
 		panel.setLayout(new BorderLayout());
 		
@@ -64,47 +63,20 @@ public class MemoMain extends JFrame implements ActionListener {
 		lbtitle = new JLabel("Memo Manager");
 		lbtitle.setAlignmentX(Component.CENTER_ALIGNMENT);
 		ptop.add(lbtitle);
-		
-		/*
-		memo = new JTextField(30);
-		memo.setAlignmentX(Component.CENTER_ALIGNMENT);
-		memo.setDocument(new BoundDocument(20,memo));
-		memo.addKeyListener(new KeyAdapter(){
-	         public void keyTyped(KeyEvent e){
-	             if(e.getKeyChar() == KeyEvent.VK_ENTER){
-	                lbmemo[memocnt] = new JLabel(memo.getText());
-	                memocnt++;
-	                memo.setText("");
-	             }
-	          }
-	       });
-		ptop.add(memo);
-		*/
 		panel.add(ptop, BorderLayout.PAGE_START);
 		
 		pmemo = new JPanel();
-		memo_table_label = new JLabel[memo_content.size()][1];
-		pmemo.setLayout(new BoxLayout(pmemo, BoxLayout.Y_AXIS));
-		for(int i=0; i<memo_content.size(); i++) {
-			memo_table_label[i][0] = new JLabel(memo_content.elementAt(i));
-			pmemo.add(memo_table_label[i][0]);
-		}
-		
+		pmemo.setSize(400, 450);
 		panel.add(pmemo, BorderLayout.LINE_START);
 		
-		previse = new JPanel();
-		previse.setLayout(new BoxLayout(previse,BoxLayout.Y_AXIS));
-		/*btnrevise = new Vector<JButton>();
-		for(int i=0; i<lbmemo.size(); i++) {
-			btnrevise.addElement(new JButton("수정"));
-		}
-		for(JButton btnrevise : btnrevise) {
-			previse.add(btnrevise);
-		}*/
-		panel.add(previse, BorderLayout.CENTER);
+
+		pcenter = new JPanel();
+		pcenter.setLayout(new BoxLayout(pcenter, BoxLayout.Y_AXIS));
+		panel.add(pcenter, BorderLayout.CENTER);
 		
-		pdelete = new JPanel();
-		panel.add(pdelete, BorderLayout.LINE_END);
+		plineend = new JPanel();
+		plineend.setLayout(new BoxLayout(plineend, BoxLayout.Y_AXIS));
+		panel.add(plineend, BorderLayout.LINE_END);
 		
 		pbottom = new JPanel();
 		btnwrite = new JButton("메모 작성");
@@ -115,33 +87,85 @@ public class MemoMain extends JFrame implements ActionListener {
 		
 		add(panel);
 		setVisible(true);
-		
-		
-		
 	}
 	
-	
-		
-
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
 		frame = new MemoMain();
-		
-		
-
 	}
+	
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		// TODO Auto-generated method stub
 		Object source = e.getSource();
+		
 		if(source == btnwrite) {
 			new MemoWrite();
 		}
 		if(source == btnrevalidate) {
+			
+			memo_table_label = new JLabel[memo_content.size()][3];
+			btnrevise = new JButton[memo_content.size()];
+			btndelete = new JButton[memo_content.size()];
+			check = new JLabel("                        ");
+			//check1 = new JLabel[memo_content.size()];
+			//check2 = new JLabel[memo_content.size()];
+			
+			
+			
+			for(int i=previouslist; i<memo_content.size(); i++) {
+				memo_table_label[i][0]= new JLabel(memo_content.elementAt(i));
+				memo_table_label[i][0].setAlignmentY(Component.LEFT_ALIGNMENT);
+				memo_table_label[i][0].setSize(300, 20);
+				
+				btnrevise[i] = new JButton("수정");
+				int edit_index=i;
+				btnrevise[i].addActionListener(new ActionListener(){
+
+	                  @Override
+	                  public void actionPerformed(ActionEvent arg0) {
+	                     // TODO Auto-generated method stub
+	                     new MemoEdit(edit_index);
+	                  }
+	                  
+	               });
+				btnrevise[i].setSize(60, 17);
+				memo_table_label[i][1] = new JLabel("                        ");
+				memo_table_label[i][1].setSize(80, 20);
+				memo_table_label[i][1].add(btnrevise[i]);
+				
+				btndelete[i] = new JButton("삭제");
+				//btndelete[i].addActionListener(this);
+				btndelete[i].setSize(60, 17);
+				memo_table_label[i][2] = new JLabel("                         ");
+				memo_table_label[i][2].setSize(80, 20);
+				memo_table_label[i][2].add(btndelete[i]);
+				
+				//check1[i] = new JLabel("                  ");
+				//check2[i] = new JLabel("                  ");
+				
+				for(int j=0; j<memo_table_column; j++) {
+					pmemo.add(memo_table_label[i][j]);
+					pmemo.add(check);
+					//pcenter.add(check1[i]); 
+					//plineend.add(check2[i]);
+					//pmemo.add(check);
+				}
+				
+			}
+			
+			previouslist = memo_content.size();
+			
 			frame.getContentPane().revalidate();
 		}
-		
-		
+		/*
+		for(int i=0; i<memo_content.size(); i++) {
+			if(source == btnrevise[i]) {
+				MemoMain.getMemoContent(i);
+				new MemoEdit();
+			}
+		}
+		*/		
 	}
 
 }
