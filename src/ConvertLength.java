@@ -138,11 +138,11 @@ public class ConvertLength extends JFrame implements ActionListener {
 	}
 	
 	
-	private float inchtocm (float a){
+	public float inchtocm (float a){
 		return (float) (a*2.54);
 	}
 	
-	private float cmtoinch (float a){
+	public float cmtoinch (float a){
 		return (float) (a/2.54);
 	}
 	

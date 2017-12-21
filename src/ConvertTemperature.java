@@ -151,11 +151,11 @@ public class ConvertTemperature extends JFrame implements ActionListener {
 	}
 	
 	
-	private float ftoc (float a){
+	float ftoc (float a){
 		return (float) ((a-32) / 1.8);
 	}
 	
-	private float ctof (float a){
+	float ctof (float a){
 		return (float) (a*1.8) +32;
 	}
 	

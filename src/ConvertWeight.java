@@ -138,11 +138,11 @@ public class ConvertWeight extends JFrame implements ActionListener {
 	}
 	
 	
-	private float poundtokg (float a){
+	public float poundtokg (float a){
 		return (float) (a*0.4535924 );
 	}
 	
-	private float kgtopound (float a){
+	public float kgtopound (float a){
 		return (float) (a/ 0.4535924);
 	}
 	

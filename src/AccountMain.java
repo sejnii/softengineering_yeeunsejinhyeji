@@ -376,9 +376,8 @@ class AccountMain
 	public static void setAccountPrice(int edit_index, int edit_price)
 	{
 		account_price.setElementAt(edit_price,edit_index);
-	}
-	public static void setAccountPrice(int edit_price)
-	{
+	
+	  
 		int size=account_price.size();
 		account_price.setSize(size+1);
 		account_price.set(size, edit_price);
