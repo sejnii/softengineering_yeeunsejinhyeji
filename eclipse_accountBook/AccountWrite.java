@@ -13,10 +13,12 @@ import java.awt.event.MouseListener;
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.Reader;
 import java.io.UnsupportedEncodingException;
 import java.io.Writer;
@@ -59,7 +61,14 @@ public class AccountWrite
 	int add_account_price=0;
 	JButton account_add_yes_btn = new JButton("Save");
 	
-	
+	public static int countLines(File input) throws IOException {
+	    try (InputStream is = new FileInputStream(input)) {
+	        int count = 1;
+	        for (int aChar = 0; aChar != -1;aChar = is.read())
+	            count += aChar == '\n' ? 1 : 0;
+	        return count;
+	    }
+	}
 	public AccountWrite() throws FileNotFoundException, UnsupportedEncodingException
 	{
 
@@ -146,7 +155,7 @@ public class AccountWrite
 					AccountMain.setAccountItem(add_account_item);
 					AccountMain.setAccountPrice(add_account_price);
 					
-					String test_d = "", test_i="", test_p="";
+	//				String test_d = "", test_i="", test_p="";
 
 /*					for(int row=1; row<AccountMain.account_table_row; row++)
 					{
@@ -157,16 +166,30 @@ public class AccountWrite
 					}
 */					
 					/////// 파일 덧붓이기
-					Writer output;
+				//	File date_file=new File("C:\\\\\\\\Users\\\\\\\\Public\\\\\\\\AccountDate.txt")
+
+					Writer date_txt_writer;
+					Writer item_txt_writer;
+					Writer price_txt_writer;
+					
 					try {
 						
 						
 					//	String buf = new String(Files.readAllBytes(Paths.get("C:\\\\\\\\\\\\\\\\Users\\\\\\\\\\\\\\\\Public\\\\\\\\\\\\\\\\AccountDate.txt")), StandardCharsets.UTF_8);
-					
-						output = new BufferedWriter(new FileWriter("C:\\\\\\\\Users\\\\\\\\Public\\\\\\\\AccountDate.txt", true));
+						date_txt_writer = new BufferedWriter(new FileWriter("C:\\\\\\\\Users\\\\\\\\Public\\\\\\\\AccountDate.txt", true));
+						item_txt_writer = new BufferedWriter(new FileWriter("C:\\\\\\\\Users\\\\\\\\Public\\\\\\\\AccountItem.txt", true));
+						price_txt_writer = new BufferedWriter(new FileWriter("C:\\\\\\\\Users\\\\\\\\Public\\\\\\\\AccountPrice.txt", true));
+
 						
-						output.append("\r\n"+add_account_date);
-						output.close();
+						date_txt_writer.append("\r\n"+add_account_date);
+						item_txt_writer.append("\r\n"+add_account_item);
+						price_txt_writer.append("\r\n"+add_account_price);
+
+						
+						date_txt_writer.close();
+						item_txt_writer.close();
+						price_txt_writer.close();
+
 		//				String line = new String(Files.read)
 						
 					} catch (IOException e2) {
@@ -177,14 +200,45 @@ public class AccountWrite
 					///////// 파일->배열
 				//	File d_txt = new File("C:\\\\\\\\Users\\\\\\\\Public\\\\\\\\AccountDate.txt");
 				try {
-						String line;
+						String date_line, item_line;
+						String price_line;
 						@SuppressWarnings("resource")
-						BufferedReader br = new BufferedReader(new FileReader("C:\\\\\\\\Users\\\\\\\\Public\\\\\\\\AccountDate.txt"));
-						while((line=br.readLine()) != null)
+
+						BufferedReader date_br = new BufferedReader(new FileReader("C:\\\\\\\\Users\\\\\\\\Public\\\\\\\\AccountDate.txt"));
+						BufferedReader item_br = new BufferedReader(new FileReader("C:\\\\\\\\Users\\\\\\\\Public\\\\\\\\AccountItem.txt"));
+						BufferedReader price_br = new BufferedReader(new FileReader("C:\\\\\\\\Users\\\\\\\\Public\\\\\\\\AccountPrice.txt"));
+
+						
+						
+						int i=0,j=0,k=0;
+						//파일 줄 수 세서 밭아 온 후 사이즈 정한다
+						AccountMain.account_date.setSize(100);
+						AccountMain.account_item.setSize(100);
+						AccountMain.account_price.setSize(100);
+
+						while((date_line=date_br.readLine()) != null)
 						{
-							int i=1;
-							AccountMain.setAccountDate(i, line);
-							System.out.println(i+" : "+AccountMain.getAccountDate(i));
+
+
+							AccountMain.setAccountDate(i, date_line);
+							
+							System.out.println("date index"+i+" : "+date_line);
+							i++;
+						}
+						while((item_line=item_br.readLine()) != null)
+						{
+							
+							System.out.println("item index"+j+" : "+item_line);
+
+							j++;
+						}
+						while((price_line=price_br.readLine()) != null)
+						{
+							
+							System.out.println("price index"+k+" : "+price_line);
+							//AccountMain.setAccountPrice(i, Integer.parseInt(price_line));							AccountMain.account_date.setSize(i+1);
+
+							k++;
 						}
 					} catch (IOException e1) {
 						// TODO Auto-generated catch block
