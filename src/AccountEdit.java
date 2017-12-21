@@ -3,6 +3,10 @@ import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+import java.io.BufferedWriter;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.io.Writer;
 import java.text.Format;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -24,7 +28,7 @@ public class AccountEdit
 {
 
 	
-	public AccountEdit(int edit_index) {
+	public AccountEdit( int edit_index) {
 		
 		JFrame account_modify_frame = new JFrame("Modify");
 		JLabel acoount_modify_main_label = new JLabel("Rewrite the transaction history");
@@ -91,13 +95,19 @@ public class AccountEdit
 					modify_account_item=account_item_textfield.getText();
 					modify_account_price=Integer.parseInt(account_price_textfield2.getText());
 					
-					
+					/*
 					
 					
 					AccountMain.setAccountDate(edit_index, modify_account_date);
 					AccountMain.setAccountItem(edit_index, modify_account_item);
 					AccountMain.setAccountPrice(edit_index, modify_account_price);
-				
+				*/
+					
+					
+					
+					////////////세진 수정2///////////////
+					editfile(edit_index, modify_account_date, modify_account_item, modify_account_price);
+					////////////여기까지////////////////////
 					}
 					else
 					{
@@ -105,7 +115,77 @@ public class AccountEdit
 					
 				
 					}
+					
+					////////////세진 수정2///////////////
+					AccountMain.dispose();
+					new AccountMain();
+					/////////////////여기까지/////////////////
 				}
+				
+				
+				
+				
+				
+				////////////세진 추가2///////////////
+				void editfile(int edit_index, String modify_account_date, String modify_account_item, int modify_account_price){
+				
+					try{
+					Writer date_txt_writer;
+					Writer item_txt_writer;
+					Writer price_txt_writer;
+					
+						date_txt_writer = new BufferedWriter(new FileWriter("C:\\\\\\\\Users\\\\\\\\Public\\\\\\\\AccountDate.txt"));
+						item_txt_writer = new BufferedWriter(new FileWriter("C:\\\\\\\\Users\\\\\\\\Public\\\\\\\\AccountItem.txt"));
+						price_txt_writer = new BufferedWriter(new FileWriter("C:\\\\\\\\Users\\\\\\\\Public\\\\\\\\AccountPrice.txt"));
+
+					
+					
+					int size = AccountMain.account_date.size();
+					for(int i=0;i<size;i++){
+						if(i!=edit_index)
+								date_txt_writer.write(AccountMain.account_date.elementAt(i)+"\r\n");
+							
+						else if(i==edit_index)
+							date_txt_writer.write(modify_account_date+"\r\n");
+					}
+					
+					for(int i=0;i<size;i++){
+						if(i!=edit_index)
+								item_txt_writer.write(AccountMain.account_item.elementAt(i)+"\r\n");
+							
+						else if(i==edit_index)
+							item_txt_writer.write(modify_account_item+"\r\n");
+					}
+					
+					for(int i=0;i<size;i++){
+						if(i!=edit_index)
+							 	price_txt_writer.write(AccountMain.account_price.elementAt(i)+"\r\n");
+							
+						else if(i==edit_index)
+							price_txt_writer.write(modify_account_price+"\r\n");
+					}
+					
+					
+					date_txt_writer.close();
+					item_txt_writer.close();
+					price_txt_writer.close();
+
+					
+					
+					} catch (IOException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+					
+					
+				}
+				
+				
+				////////////////////////여기까지/////////////
+				
+				
+				
+				
 				@Override
 				public void mouseEntered(MouseEvent e) 
 				{
@@ -176,7 +256,12 @@ public class AccountEdit
 		*/
 		account_modify_frame.add(account_modify_yes_btn);
 		account_modify_frame.setVisible(true);
+		
+		////////////세진 수정2///////////////
+		account_modify_frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 
+		
+		//////////////////여기까지///////////////
 	}
 	
 	

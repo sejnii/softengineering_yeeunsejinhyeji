@@ -1,5 +1,8 @@
 import java.awt.*;
 import java.awt.event.*;
+import java.io.BufferedWriter;
+import java.io.FileWriter;
+import java.io.Writer;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -15,12 +18,12 @@ import javax.swing.border.Border;
 
 class AccountMain
 {
-	
+	static AccountMain main;
 	
 	public static void main(String[] args) 
 	{
 
-		new AccountMain();
+		main = new AccountMain();
 		
 	}
 	public static Vector <String> account_date = new Vector<String>();
@@ -34,7 +37,7 @@ class AccountMain
 	
 	public static int account_main_frame_width;
 	public static int account_main_frame_height;
-	
+	static JFrame account_main_frame;
 	public AccountMain()
 	{
 		/**************variable settings**************/
@@ -44,7 +47,7 @@ class AccountMain
 	
 
 	
-		JFrame account_main_frame = new JFrame("Account Book");
+		account_main_frame = new JFrame("Account Book");
 		JPanel account_table_pannel = new JPanel();
 		JLabel account_title_label = new JLabel("Account Book");
 
@@ -282,7 +285,7 @@ class AccountMain
 						@Override
 						public void actionPerformed(ActionEvent arg0) {
 							// TODO Auto-generated method stub
-							new AccountEdit(index);
+							new AccountEdit( index);
 						}
 						
 					});
@@ -323,7 +326,6 @@ class AccountMain
 				System.out.println(account_table_row+";;"+account_date.get(account_table_row-1));
 		
 				
-				account_main_frame_width = 100+((account_table_column-1)*80+max_table_string_length*30);
 				account_main_frame_height = ((account_table_row*35)+250);
 				account_main_frame.setBounds(120,120,account_main_frame_width,account_main_frame_height);
 				
@@ -343,6 +345,11 @@ class AccountMain
 		
 		//last setting: add pannel to frame & visible 
 		account_main_frame.add(account_table_pannel);
+		
+		///세진수정2//////
+		account_main_frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);	
+		
+		/////////////여기까지/////////////////
 		account_main_frame.setVisible(true);
 	}
 	
@@ -366,7 +373,7 @@ class AccountMain
 	public static void setAccountItem(int edit_index, String edit_item)
 	{
 		account_item.setElementAt(edit_item, edit_index);
-	}
+	}	
 	public static void setAccountItem(String edit_item)
 	{	int size=account_item.size();
 	account_item.setSize(size+1);
@@ -377,7 +384,8 @@ class AccountMain
 	{
 		account_price.setElementAt(edit_price,edit_index);
 	
-	  
+	}
+	public static void setAccountPrice(int edit_price){
 		int size=account_price.size();
 		account_price.setSize(size+1);
 		account_price.set(size, edit_price);
@@ -399,5 +407,58 @@ class AccountMain
 	}
 	
 	
+	////세진수정2///////////////
+	public static void dispose(){
+		account_main_frame.dispose();
+	}
+	//////여기까지/////////
+	
 	
 }
+
+
+
+
+
+
+
+
+
+
+////////////////////delete를 구현한다면///////////////////////
+/*
+Writer date_txt_writer;
+Writer item_txt_writer;
+Writer price_txt_writer;
+
+	date_txt_writer = new BufferedWriter(new FileWriter("C:\\\\\\\\Users\\\\\\\\Public\\\\\\\\AccountDate.txt"));
+	item_txt_writer = new BufferedWriter(new FileWriter("C:\\\\\\\\Users\\\\\\\\Public\\\\\\\\AccountItem.txt"));
+	price_txt_writer = new BufferedWriter(new FileWriter("C:\\\\\\\\Users\\\\\\\\Public\\\\\\\\AccountPrice.txt"));
+
+
+
+int size = AccountMain.account_date.size();
+
+********삭제하는 index가 delete_index라고 가정***************
+for(int i=0;i<size;i++){
+	if(i!=delete_index)
+			date_txt_writer.write(AccountMain.account_date.elementAt(i)+"\r\n");
+	
+}
+for(int i=0;i<size;i++){
+	if(i!=delete_index)
+			date_txt_writer.write(AccountMain.account_item.elementAt(i)+"\r\n");
+	
+}
+for(int i=0;i<size;i++){
+	if(i!=delete_index)
+			date_txt_writer.write(AccountMain.account_price.elementAt(i)+"\r\n");
+	
+}
+
+account_main_frame.dispose();
+new AccountMain();
+
+
+*/
+

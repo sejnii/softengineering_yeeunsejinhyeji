@@ -204,7 +204,9 @@ public class AccountWrite
 		account_price_textfield2.setDocument(new JTextFieldLimit(7));
 		
 		account_add_frame.add(account_add_yes_btn);
+		account_add_frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		account_add_frame.setVisible(true);
+		
 	}
 	
 	

@@ -19,6 +19,10 @@ class AccountMain() thcolumns ParseException
 	public static Vector <String> account_item = new Vector<String>();
 	public static Vector <Integer> account_price = new Vector<Integer>();
 	
+	public static void main(String[] args) throws ParseException {
+		frame = new CalculatorMain();
+		
+	}
 	
 	public AccountMain()
 	{
