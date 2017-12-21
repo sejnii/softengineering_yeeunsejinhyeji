@@ -99,9 +99,10 @@ public class MemoMain extends JFrame implements ActionListener {
 		// TODO Auto-generated method stub
 		Object source = e.getSource();
 		
-		if(source == btnwrite) {
+		/*if(source == btnwrite) {
 			new MemoWrite();
-		}
+		}*/
+		
 		if(source == btnrevalidate) {
 			
 			memo_table_label = new JLabel[memo_content.size()][3];
@@ -120,15 +121,8 @@ public class MemoMain extends JFrame implements ActionListener {
 				
 				btnrevise[i] = new JButton("¼öÁ¤");
 				int edit_index=i;
-				btnrevise[i].addActionListener(new ActionListener(){
-
-	                  @Override
-	                  public void actionPerformed(ActionEvent arg0) {
-	                     // TODO Auto-generated method stub
-	                     new MemoEdit(edit_index);
-	                  }
-	                  
-	               });
+				
+				
 				btnrevise[i].setSize(60, 17);
 				memo_table_label[i][1] = new JLabel("                        ");
 				memo_table_label[i][1].setSize(80, 20);
