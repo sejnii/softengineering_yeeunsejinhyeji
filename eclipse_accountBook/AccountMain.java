@@ -1,5 +1,11 @@
 import java.awt.*;
 import java.awt.event.*;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.PrintWriter;
+import java.io.UnsupportedEncodingException;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -13,31 +19,82 @@ import java.util.Vector;
 import javax.swing.*;
 import javax.swing.border.Border;
 
-class AccountMain() thcolumns ParseException
+class AccountMain
 {
+	
 	public static Vector <String> account_date = new Vector<String>();
 	public static Vector <String> account_item = new Vector<String>();
 	public static Vector <Integer> account_price = new Vector<Integer>();
 	
+	public static String account_date_str="";
+	public static String account_item_str="";
+	public static String account_price_str="";
 	
-	public AccountMain()
+	public static int account_table_row=0+1;
+	public static int account_table_column = 5;
+	public static int max_table_string_length=0;
+	public static JLabel[][] account_table_label= new JLabel[account_table_row][account_table_column];
+	
+	public static int account_main_frame_width;
+	public static int account_main_frame_height;
+	
+	public static int account_delete_index;
+	
+	static File date_file=new File("AccountDate.txt");
+	static File item_file=new File("AccountItem.txt");
+	static File price_file=new File("AccountPrice.txt");
+	
+	static Path date_file_path = Paths.get("AccountDate.txt");
+	
+/*
+	@SuppressWarnings("resource")
+	public static void WriteDateFile(String content) throws FileNotFoundException, UnsupportedEncodingException
 	{
+		writer_date.println(content);
+		writer_date.close();
+//		return writer;
+			
+	}
+	@SuppressWarnings("resource")
+	public static void WriteItemFile(String content) throws FileNotFoundException, UnsupportedEncodingException
+	{
+		writer_item.println(content);
+		writer_item.close();
+//		return writer;
+			
+	}
+	@SuppressWarnings("resource")
+	public static void WritePriceFile(String content) throws FileNotFoundException, UnsupportedEncodingException
+	{
+		writer_price.println(content);
+		writer_item.close();
+//		return writer;	나중에 String return 되게 할 수도??
+			
+	}
+	*/
+	public AccountMain() throws FileNotFoundException, UnsupportedEncodingException
+	{
+//		 writer_date = new PrintWriter("C:\\\\\\\\Users\\\\\\\\Public\\\\\\\\AccountDate.txt", "UTF-8");
+//		 writer_item = new PrintWriter("C:\\\\\\\\Users\\\\\\\\Public\\\\\\\\AccountItem.txt", "UTF-8");
+//		 writer_price = new PrintWriter("C:\\\\\\\\Users\\\\\\\\Public\\\\\\\\AccountPrice.txt", "UTF-8");
+			
 		/**************variable settings**************/
-		int max_table_string_length=0;
+
 		
-		int account_table_row = 6+1;		//6:transction times, 1:first column for menu(Date, Item name, Price)
-		int account_table_column = 5;
-		int account_main_frame_width;
-		int account_main_frame_height;
+//		int account_table_row = 6+1;		//6:transction times, 1:first column for menu(Date, Item name, Price)
+	
+
 	
 		JFrame account_main_frame = new JFrame("Account Book");
 		JPanel account_table_pannel = new JPanel();
 		JLabel account_title_label = new JLabel("Account Book");
-		JLabel[][] account_table_label;
+
 		JButton[] account_modify_button = new JButton[account_table_row];
 		JButton[] account_delete_button =  new JButton[account_table_row];
 		JButton refresh_button;
 		JButton add_deal_button = new JButton("Add transaction history");
+		
+		account_table_label = new JLabel[account_table_row][account_table_column];
 		
 		
 		/**************set the refresh icon in refresh button**************/
@@ -52,11 +109,11 @@ class AccountMain() thcolumns ParseException
 		account_main_frame.setLayout(null);
 		account_main_frame.getContentPane().setBackground(Color.WHITE);
 		
-		account_table_pannel.setLayout(new GridLayout(account_table_row,account_table_column));
+		account_table_pannel.setLayout(new GridLayout(0,account_table_column));
 		account_table_pannel.setBorder(BorderFactory.createLineBorder(Color.WHITE));
 		account_table_pannel.setBackground(Color.WHITE);
 		
-		account_table_label = new JLabel[account_table_row][account_table_column];
+//		account_table_label = new JLabel[account_table_row][account_table_column];
 		
 		
 		/**************account label(table) first line(row) setting: meaning of each column**************/
@@ -86,16 +143,17 @@ class AccountMain() thcolumns ParseException
 		for (int table_row_int=1; table_row_int<account_table_row;table_row_int++)
 		{
 			//first column show: Date 
-			setAccountDate(table_row_int, "2011/11/11");
+//			setAccountDate(table_row_int, "2011/11/11");
 			account_table_label[table_row_int][0] = new JLabel(account_date.get(table_row_int));
 			account_table_label[table_row_int][0].setSize(80, 35);
 
 			
-			//secont column show: Item (+define the max length of one column in table)
+			//second column show: Item (+define the max length of one column in table)
 			setAccountItem(table_row_int,"things");
 			account_table_label[table_row_int][1] = new JLabel(account_item.get(table_row_int));
 			if(max_table_string_length<account_item.get(table_row_int).length())
 			{
+				
 				max_table_string_length = account_item.get(table_row_int).length();	
 			}
 			account_table_label[table_row_int][1].setSize(max_table_string_length+10, 35);
@@ -132,6 +190,11 @@ class AccountMain() thcolumns ParseException
 			account_table_label[table_row_int][4].add(account_delete_button[table_row_int]);
 			
 			
+		
+			
+			
+			
+			
 			
 			//set the font and alignment in all table label
 			for(int table_column_int=0; table_column_int<account_table_column; table_column_int++)
@@ -143,8 +206,70 @@ class AccountMain() thcolumns ParseException
 	//			account_table_label[table_row_int][table_column].getBounds();
 				account_table_label[table_row_int][table_column_int].setBorder(BorderFactory.createLineBorder(Color.LIGHT_GRAY));
 				account_table_pannel.add(account_table_label[table_row_int][table_column_int]);
+				
 			}
 		}
+		
+	
+		
+		for(int i=0; i<account_table_row-1; i++)
+		{
+			
+		}
+		
+//		boolean test_add=false;
+		add_deal_button.addActionListener(new ActionListener() 
+		{ 	
+			
+			
+
+			@Override
+			public void actionPerformed(ActionEvent e) 
+			{
+				
+				try {
+					new AccountWrite();
+				} catch (FileNotFoundException | UnsupportedEncodingException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
+//				AccountWrite account_write = new AccountWrite();
+//				System.out.println(account_write.add_account_confirm_boolean);
+				
+//				account_table_row++;
+//				System.out.println(account_table_row);
+	//			account_write.accountWrite();
+ 
+//				account_date.set(account_table_row-1, account_write.add_account_date);
+				
+	//			System.out.println(account_write.add_account_date);
+//				System.out.println(account_date.get(account_table_row-1));
+				
+				/*				try {
+					account_write.wait();
+				} catch (InterruptedException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+					if(account_write.add_account_confirm_boolean==true)
+					{
+						System.out.println(account_write.add_account_confirm_boolean);
+						account_table_row++;
+						account_date.add(account_table_row-2, account_write.add_account_date);
+						account_item.add(account_table_row-2, account_write.add_account_item);
+						account_price.add(account_table_row-2, account_write.add_account_price);
+						
+						System.out.println(account_table_row+" ;; "
+											+account_write.add_account_date+";;");
+					}
+				}
+*/		
+				
+
+			}
+			
+		});
+		
+
 		
 		
 		/**************design settings**************/
@@ -164,7 +289,7 @@ class AccountMain() thcolumns ParseException
 		account_main_frame.add(account_title_label);
 		
 	
-		//refresh button setting (+cheching the frame refresh by println)
+		//refresh button setting (+checking the frame refresh by println)
 		refresh_button.setBorder(null);
 		refresh_button.setMargin(new Insets(30, 30, 30, 30));
 		refresh_button.setBounds((account_main_frame_width-50),10,30, 30);
@@ -172,12 +297,155 @@ class AccountMain() thcolumns ParseException
 	//	refresh_button.setBackground(Color.LIGHT_GRAY);
 		refresh_button.setBackground(null);
 		account_main_frame.add(refresh_button );
-		refresh_button.addActionListener(new ActionListener() {
-		      public void actionPerformed(ActionEvent e) {
+		
+		int before_add_row=account_table_row;
+		refresh_button.addActionListener(new ActionListener()
+		{
+		      public void actionPerformed(ActionEvent e) 
+		      {
+		    		
+		    		
+		    		account_table_label = new JLabel[account_table_row][account_table_column];
+	//				System.out.println(account_table_row+";;"+account_date.get(account_table_row-1));
+
+
+		  		account_table_pannel.setLayout(new GridLayout(0,account_table_column));
+//		    	  account_table_label =new JLabel[account_table_row][account_table_column];
+				JButton[] account_modify_button = new JButton[account_table_row];
+				JButton[] account_delete_button =  new JButton[account_table_row];
+			
+		  		
+		    	for(int i=before_add_row; i<account_table_row; i++)
+				{
+		    		account_table_label = new JLabel[account_table_row][5];
+		    		
+		    		System.out.println("in for");
+		    		System.out.println(";;before row"+before_add_row+";;");
+		    		System.out.println(";;row;;;;"+account_table_row+";;");
+					account_table_label[i][0]=new JLabel(account_date.get(i));
+					account_table_label[i][1]=new JLabel(account_item.get(i));
+					account_table_label[i][2]=new JLabel(account_price.get(i)+"won");
+					
+				
+					account_table_label[i][3] = new JLabel();
+					account_table_label[i][3].setSize(80, 35);
+					account_modify_button[i] = new JButton("Click");
+					account_modify_button[i].setBackground(Color.lightGray);
+					account_modify_button[i].setBounds((max_table_string_length*6+64)/2-35, 5, 70, 25);
+					account_modify_button[i].setBorder(null);
+					account_table_label[i][3].add(account_modify_button[i]);
+					
+						account_table_label[i][4] = new JLabel();
+						account_table_label[i][4].setSize(80, 35);
+						account_delete_button[i] = new JButton("Click");
+						account_delete_button[i].setBackground(Color.lightGray);
+						account_delete_button[i].setBounds((max_table_string_length*6+64)/2-35, 5, 70, 25);
+						account_delete_button[i].setBorder(null);
+						account_table_label[i][4].add(account_delete_button[i]);
+						
+						account_delete_index=i;
+						account_delete_button[i].addMouseListener(new MouseListener()
+						{
+							public void mouseClicked(MouseEvent e)
+							{
+								System.out.println(">>>>in delete btn");
+
+								int account_add_yes_int = JOptionPane.showConfirmDialog(null,"Are you sure to delete this?", "Delete confirm", JOptionPane.YES_NO_OPTION);
+								if (account_add_yes_int == JOptionPane.YES_OPTION)
+								{
+									account_date.removeElementAt(account_delete_index);
+									account_item.removeElementAt(account_delete_index);
+									account_price.removeElementAt(account_delete_index);
+									
+									account_table_row--;
+					//				account_date.setSize(account_date.size()-1);
+					//				account_item.setSize(account_item.size()-1);
+					//				account_price.setSize(account_price.size()-1);
+
+									
+									
+								//	for(int i=0; i<4; i++)
+								//	{
+										
+										//account_table_label[account_delete_index][i].removeAll();
+										//account_table_pannel.remove(account_table_label[account_delete_index][i]);
+								//	}
+									
+									
+									//AccountMain.setAccountDate(account_delete_index,null);
+									//AccountMain.setAccountItem(account_delete_index,null);
+									//AccountMain.setAccountPrice(account_delete_index,0);
+
+						//			account_date.remove(account_delete_index);
+						//			account_item.remove(account_delete_index);
+						//			account_price.remove(account_delete_index);
+									System.out.println("**************************************");
+									System.out.println(";;delete #:"+account_delete_index);
+						//			System.out.println(account_date.get(account_delete_index));
+									System.out.println("**************************************");
+
+									
+									
+//									account_item.removeElementAt(account_delete_index-1);
+//									account_price.removeElementAt(account_delete_index-1);
+
+								}					
+							}
+
+							@Override
+							public void mouseEntered(MouseEvent arg0) {
+								// TODO Auto-generated method stub
+								
+							}
+
+							@Override
+							public void mouseExited(MouseEvent arg0) {
+								// TODO Auto-generated method stub
+								
+							}
+
+							@Override
+							public void mousePressed(MouseEvent arg0) {
+								// TODO Auto-generated method stub
+								
+							}
+
+							@Override
+							public void mouseReleased(MouseEvent arg0) {
+								// TODO Auto-generated method stub
+								
+							}
+						});
+				
+//						account_table_row=account_date.size();	
+						
+					
+					for (int k=0; k<5; k++)
+					{
+						account_table_pannel.add(account_table_label[i][k]);
+				
+					}
+//					account_main_frame_width = 100+((account_table_column-1)*80+max_table_string_length*30);
+//					account_main_frame_height = ((account_table_row*35)+250);
+//					account_main_frame.setBounds(120,120,account_main_frame_width,account_main_frame_height);
+					
+//					account_table_pannel.setBounds(50, 100, ((account_table_column-1)*80+max_table_string_length*30), (account_table_row*35));
+		
+				}
 		        Component component = (Component) e.getSource();
 		        JFrame frame = (JFrame) SwingUtilities.getRoot(component);
-		        frame.revalidate();
-		        System.out.println("refresh OK");
+		        frame.getContentPane().revalidate();
+//		        System.out.println("refresh OK");
+//				System.out.println(account_table_row+";;"+account_date.get(account_table_row-1));
+		
+				
+				account_main_frame_width = 100+((account_table_column-1)*80+max_table_string_length*30);
+				account_main_frame_height = ((account_table_row*35)+250);
+				account_main_frame.setBounds(120,120,account_main_frame_width,account_main_frame_height);
+				
+				account_table_pannel.setBounds(50, 100, ((account_table_column-1)*80+max_table_string_length*30), (account_table_row*35));
+		//		
+
 		      }
 		    });
 
@@ -197,23 +465,40 @@ class AccountMain() thcolumns ParseException
 	
 	
 	
-	public static void setAccountDate(int edit_index, String edit_date) thcolumns ParseException
+	public static void setAccountDate(int edit_index, String edit_date) 
 	{
-		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy/MM/dd", Locale.ENGLISH);
-		LocalDate account_date_localDate = LocalDate.parse(edit_date, formatter);
+	
+		account_date.set(edit_index,edit_date);
+
+	}
+	public static void setAccountDate(String edit_date) 
+	{
+		int size=account_date.size();
+		account_date.setSize(size+1);
+		account_date.set(size, edit_date);
 		
-		account_date.add(edit_index,formatter.format(account_date_localDate));
 
 	}
 	public static void setAccountItem(int edit_index, String edit_item)
 	{
-		account_item.add(edit_index,edit_item);
+		account_item.setElementAt(edit_item, edit_index);
 	}
-	public static void setAccountPrice(int edit_index, int edit_price)
-	{
-		account_price.add(edit_index,edit_price);
+	public static void setAccountItem(String edit_item)
+	{	int size=account_item.size();
+	account_item.setSize(size+1);
+	account_item.set(size, edit_item);
 	}
 	
+	public static void setAccountPrice(int edit_index, int edit_price)
+	{
+		account_price.set(edit_index,edit_price);
+	}
+	public static void setAccountPrice(int edit_price)
+	{
+		int size=account_price.size();
+		account_price.setSize(size+1);
+		account_price.set(size, edit_price);
+	}
 	//maybe do no need: get functions		//just use:    account_date.get(index_number);
 	public static String getAccountDate(int edit_index)
 	{

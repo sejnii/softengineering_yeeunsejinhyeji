@@ -176,9 +176,9 @@ public class AccountWrite
 						
 						
 					//	String buf = new String(Files.readAllBytes(Paths.get("C:\\\\\\\\\\\\\\\\Users\\\\\\\\\\\\\\\\Public\\\\\\\\\\\\\\\\AccountDate.txt")), StandardCharsets.UTF_8);
-						date_txt_writer = new BufferedWriter(new FileWriter("C:\\\\\\\\Users\\\\\\\\Public\\\\\\\\AccountDate.txt", true));
-						item_txt_writer = new BufferedWriter(new FileWriter("C:\\\\\\\\Users\\\\\\\\Public\\\\\\\\AccountItem.txt", true));
-						price_txt_writer = new BufferedWriter(new FileWriter("C:\\\\\\\\Users\\\\\\\\Public\\\\\\\\AccountPrice.txt", true));
+						date_txt_writer = new BufferedWriter(new FileWriter(AccountMain.date_file, true));
+						item_txt_writer = new BufferedWriter(new FileWriter(AccountMain.item_file, true));
+						price_txt_writer = new BufferedWriter(new FileWriter(AccountMain.price_file, true));
 
 						
 						date_txt_writer.append("\r\n"+add_account_date);
@@ -204,9 +204,9 @@ public class AccountWrite
 						String price_line;
 						@SuppressWarnings("resource")
 
-						BufferedReader date_br = new BufferedReader(new FileReader("C:\\\\\\\\Users\\\\\\\\Public\\\\\\\\AccountDate.txt"));
-						BufferedReader item_br = new BufferedReader(new FileReader("C:\\\\\\\\Users\\\\\\\\Public\\\\\\\\AccountItem.txt"));
-						BufferedReader price_br = new BufferedReader(new FileReader("C:\\\\\\\\Users\\\\\\\\Public\\\\\\\\AccountPrice.txt"));
+						BufferedReader date_br = new BufferedReader(new FileReader(AccountMain.date_file));
+						BufferedReader item_br = new BufferedReader(new FileReader(AccountMain.item_file));
+						BufferedReader price_br = new BufferedReader(new FileReader(AccountMain.price_file));
 
 						
 						
