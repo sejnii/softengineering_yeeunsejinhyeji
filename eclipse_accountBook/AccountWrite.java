@@ -58,7 +58,7 @@ public class AccountWrite
 	
 	String add_account_date="";
 	String add_account_item="";
-	int add_account_price=0;
+	String add_account_price="";
 	JButton account_add_yes_btn = new JButton("Save");
 	
 	public static int countLines(File input) throws IOException {
@@ -80,14 +80,13 @@ public class AccountWrite
 		JLabel account_add_price_label = new JLabel("Enter the price");
 		JFormattedDateTextField account_date_textfield = new JFormattedDateTextField();
 		JFormattedTextField account_item_textfield = new JFormattedTextField();
-		JFormattedPriceTextField account_price_textfield = new JFormattedPriceTextField();
-		JFormattedTextField account_price_textfield2 = new JFormattedTextField();
+		JFormattedTextField account_price_textfield = new JFormattedTextField();
 
 
 		JLabel add_test_show_label = new JLabel();
 		add_test_show_label.setText("Test");
 		
-		account_price_textfield2.addKeyListener(new KeyAdapter()
+		account_price_textfield.addKeyListener(new KeyAdapter()
 		{
 			public void keyTyped(KeyEvent e)
 			{
@@ -115,7 +114,7 @@ public class AccountWrite
 						add_account_confirm_boolean=true;
 					add_account_date=account_date_textfield.getText();
 					add_account_item=account_item_textfield.getText();
-					add_account_price=Integer.parseInt(account_price_textfield2.getText());
+					add_account_price=account_price_textfield.getText();
 					
 					add_test_show_label.setText(add_account_date+";"
 												+add_account_item+";"
@@ -197,54 +196,22 @@ public class AccountWrite
 						e2.printStackTrace();
 					}
 					
-					///////// 파일->배열
-				//	File d_txt = new File("C:\\\\\\\\Users\\\\\\\\Public\\\\\\\\AccountDate.txt");
+					
+					/*********** yes btn -> turn off write frame&turn on main frame ******************/
+					
+				account_add_frame.setVisible(false);
+				account_add_frame.dispose();
 				try {
-						String date_line, item_line;
-						String price_line;
-						@SuppressWarnings("resource")
-
-						BufferedReader date_br = new BufferedReader(new FileReader(AccountMain.date_file));
-						BufferedReader item_br = new BufferedReader(new FileReader(AccountMain.item_file));
-						BufferedReader price_br = new BufferedReader(new FileReader(AccountMain.price_file));
-
-						
-						
-						int i=0,j=0,k=0;
-						//파일 줄 수 세서 밭아 온 후 사이즈 정한다
-						AccountMain.account_date.setSize(100);
-						AccountMain.account_item.setSize(100);
-						AccountMain.account_price.setSize(100);
-
-						while((date_line=date_br.readLine()) != null)
-						{
-
-
-							AccountMain.setAccountDate(i, date_line);
-							
-							System.out.println("date index"+i+" : "+date_line);
-							i++;
-						}
-						while((item_line=item_br.readLine()) != null)
-						{
-							
-							System.out.println("item index"+j+" : "+item_line);
-
-							j++;
-						}
-						while((price_line=price_br.readLine()) != null)
-						{
-							
-							System.out.println("price index"+k+" : "+price_line);
-							//AccountMain.setAccountPrice(i, Integer.parseInt(price_line));							AccountMain.account_date.setSize(i+1);
-
-							k++;
-						}
-					} catch (IOException e1) {
-						// TODO Auto-generated catch block
-						e1.printStackTrace();
-					}
-
+					new AccountMain();
+				} catch (FileNotFoundException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				} catch (UnsupportedEncodingException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
+				/****************************************************************************************/
+				
 									/*	
 							try {
 								AccountMain.WritePriceFile(test_p);
@@ -322,10 +289,10 @@ public class AccountWrite
 	
 		account_date_textfield.setBounds(10, 110, 300, 35);
 		account_item_textfield.setBounds(10, 180, 300, 35);
-		account_price_textfield.setBounds(10, 300, 300, 35);
+
 		add_test_show_label.setBounds(10, 340, 300, 300);
 
-		account_price_textfield2.setBounds(10,340,300, 35);
+		account_price_textfield.setBounds(10,340,300, 35);
 		account_add_yes_btn.setBounds(50, 450, 100, 30);
 
 		account_add_frame.add(acoount_add_main_label);
@@ -334,12 +301,12 @@ public class AccountWrite
 		account_add_frame.add(account_add_item_label);
 		account_add_frame.add(account_item_textfield);
 		account_add_frame.add(account_add_price_label);
+
 		account_add_frame.add(account_price_textfield);
-		account_add_frame.add(account_price_textfield2);
 		account_add_frame.add(add_test_show_label);
 		
 		account_item_textfield.setDocument(new JTextFieldLimit(20));
-		account_price_textfield2.setDocument(new JTextFieldLimit(7));
+		account_price_textfield.setDocument(new JTextFieldLimit(7));
 		
 		account_add_frame.add(account_add_yes_btn);
 		account_add_frame.setVisible(true);
