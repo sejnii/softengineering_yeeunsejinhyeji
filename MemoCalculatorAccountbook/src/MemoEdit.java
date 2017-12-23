@@ -29,9 +29,9 @@ public class MemoEdit extends JFrame implements ActionListener {
       ptitle = new JPanel();
       ptitle.setLayout(new BoxLayout(ptitle, BoxLayout.Y_AXIS));
       
-      lbtitle = new JLabel("¸Ş¸ğ ÀÛ¼º");
+      lbtitle = new JLabel("ë©”ëª¨ ì‘ì„±");
       lbtitle.setAlignmentX(Component.CENTER_ALIGNMENT);
-      lblimit = new JLabel("¸Ş¸ğ´Â 20ÀÚ ÀÌ³»·Î ¼öÁ¤ÇØÁÖ¼¼¿ä.");
+      lblimit = new JLabel("ë©”ëª¨ëŠ” 20ì ì´ë‚´ë¡œ ìˆ˜ì •í•´ì£¼ì„¸ìš”.");
       lblimit.setAlignmentX(Component.CENTER_ALIGNMENT);
       ptitle.add(lbtitle);
       ptitle.add(lblimit);
@@ -47,7 +47,7 @@ public class MemoEdit extends JFrame implements ActionListener {
       panel.add(ptfmemo,BorderLayout.CENTER);
       
       pbtnrevise = new JPanel();
-      btnrevise = new JButton("ÀúÀå");
+      btnrevise = new JButton("ì €ì¥");
       btnrevise.addActionListener(this);
       pbtnrevise.add(btnrevise);
       panel.add(pbtnrevise, BorderLayout.PAGE_END);
@@ -57,7 +57,27 @@ public class MemoEdit extends JFrame implements ActionListener {
    }
    
    
-   
+   public void memoFileEdit(String s) {
+      try {
+         
+         Writer memo_writer = new BufferedWriter(new FileWriter("memo.txt"));
+         int length = MemoMain.memo_vec.size();
+         
+         for(int i=1;i<length;i++)
+         {
+            if(i!=modify_index) {
+               memo_writer.write(MemoMain.getMemoContent(i)+"\r\n");}
+            else {
+               memo_writer.write(s);
+               }
+            }
+      
+         memo_writer.close();
+      }
+      catch(IOException e1) {
+         
+      }
+   }
 
    @Override
    public void actionPerformed(ActionEvent e) {
@@ -65,29 +85,9 @@ public class MemoEdit extends JFrame implements ActionListener {
       Object source = e.getSource();
       
       if(source == btnrevise) {
-         try {
-            System.out.println("edit index : "+modify_index);
-         Writer memo_writer = new BufferedWriter(new FileWriter("memo.txt"));
-         int length = MemoMain.memo_vec.size();
-         System.out.println("len : "+length);
-         for(int i=1;i<length;i++)
-         {
-            if(i!=modify_index) {
-               System.out.println(MemoMain.getMemoContent(i));
-               memo_writer.write(MemoMain.getMemoContent(i)+"\r\n");}
-            else {
-               System.out.println(tfmemo.getText());
-               memo_writer.write(tfmemo.getText()+"\r\n");
-            }
-         }
          
-         System.out.println("for¹® ³¡");
-         memo_writer.close();
-         }
-         catch(IOException e1) {
-            
-         }
-         
+         String s = tfmemo.getText()+"\r\n";
+         memoFileEdit(s);
          
          MemoMain.dispose();
          new MemoMain();

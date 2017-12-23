@@ -13,7 +13,6 @@ import java.io.Writer;
 
 import javax.swing.*;
 
-@SuppressWarnings("serial")
 public class MemoWrite extends JFrame implements ActionListener{
    
    JPanel panel, ptitle, ptfmemo, pbtnsave;
@@ -32,9 +31,9 @@ public class MemoWrite extends JFrame implements ActionListener{
       ptitle = new JPanel();
       ptitle.setLayout(new BoxLayout(ptitle, BoxLayout.Y_AXIS));
       
-      lbtitle = new JLabel("¸Ş¸ğ ÀÛ¼º");
+      lbtitle = new JLabel("ë©”ëª¨ ì‘ì„±");
       lbtitle.setAlignmentX(Component.CENTER_ALIGNMENT);
-      lblimit = new JLabel("¸Ş¸ğ´Â 20ÀÚ ÀÌ³»·Î ÀÛ¼ºÇØÁÖ¼¼¿ä.");
+      lblimit = new JLabel("ë©”ëª¨ëŠ” 20ì ì´ë‚´ë¡œ ì‘ì„±í•´ì£¼ì„¸ìš”.");
       lblimit.setAlignmentX(Component.CENTER_ALIGNMENT);
       ptitle.add(lbtitle);
       ptitle.add(lblimit);
@@ -46,7 +45,7 @@ public class MemoWrite extends JFrame implements ActionListener{
       panel.add(ptfmemo,BorderLayout.CENTER);
       
       pbtnsave = new JPanel();
-      btnsave = new JButton("ÀúÀå");
+      btnsave = new JButton("ì €ì¥");
       btnsave.addActionListener(this);
       pbtnsave.add(btnsave);
       panel.add(pbtnsave, BorderLayout.PAGE_END);
@@ -61,7 +60,16 @@ public class MemoWrite extends JFrame implements ActionListener{
       new MemoWrite();
       
    }
-
+   public void memoFileWrite(String data) {
+      try {
+         Writer memo_writer = new BufferedWriter(new FileWriter("memo.txt",true));
+         memo_writer.append(data);
+         memo_writer.close();
+      }catch(IOException ex) {
+         System.out.println("ì˜¤ë¥˜");
+      }
+   }
+   
    @Override
    public void actionPerformed(ActionEvent e) {
       // TODO Auto-generated method stub
@@ -71,14 +79,7 @@ public class MemoWrite extends JFrame implements ActionListener{
       if(source == btnsave) {
          String data = tfmemo.getText()+"\r\n";
          
-         try {
-            Writer memo_writer = new BufferedWriter(new FileWriter("memo.txt",true));
-            memo_writer.append(data);
-            memo_writer.close();
-         }catch(IOException ex) {
-            System.out.println("¿À·ù");
-         }
-         
+         memoFileWrite(data);
          
          MemoMain.dispose();
          new MemoMain();
@@ -87,4 +88,5 @@ public class MemoWrite extends JFrame implements ActionListener{
       }
       
    }
+
 }
