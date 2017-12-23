@@ -132,17 +132,40 @@ class AccountMain
 		System.out.println("row"+account_table_row);
 		
 		
-		/**************variable settings**************/
+		/****************variable settings**************/
 	
 		JPanel account_table_pannel = new JPanel();
 		JLabel account_title_label = new JLabel("Account Book");
-
+		
+		JPanel account_table_legend_panel = new JPanel();
+		JLabel[] account_table_legend_label;
+		
 		account_table_label= new JLabel[account_table_row][account_table_column];
 		JButton[] account_modify_button = new JButton[account_table_row];
 		JButton[] account_delete_button =  new JButton[account_table_row];
 		
 		account_table_label = new JLabel[account_table_row][account_table_column];
 
+		
+		/********##****** table table legend setting ***************/
+		account_table_legend_label= new JLabel[account_table_column];
+		account_table_legend_panel.setLayout(new GridLayout(0,account_table_column));
+		account_table_legend_label[0]=new JLabel("Date");
+		account_table_legend_label[1]=new JLabel("Item");
+		account_table_legend_label[2]=new JLabel("Price");
+		account_table_legend_label[3]=new JLabel("Modify");
+		account_table_legend_label[4]=new JLabel("Delete");
+		for(int first_row_setting_int=0; first_row_setting_int<5; first_row_setting_int++)
+		{
+			account_table_legend_label[first_row_setting_int].setBorder(BorderFactory.createLineBorder(Color.LIGHT_GRAY));
+			account_table_legend_panel.add(account_table_legend_label[first_row_setting_int]);
+
+			account_table_legend_label[first_row_setting_int].setVerticalAlignment(SwingConstants.CENTER);
+			account_table_legend_label[first_row_setting_int].setHorizontalAlignment(SwingConstants.CENTER);
+			account_table_legend_label[first_row_setting_int].setFont(new Font("Courier New", Font.PLAIN, 15));
+		}
+		
+		
 		/**************basic setting for main frame & pannel & label**************/
 		account_main_frame.setLayout(null);
 		account_main_frame.getContentPane().setBackground(Color.WHITE);
@@ -329,9 +352,10 @@ class AccountMain
 		account_main_frame_width = 100+((account_table_column-1)*80+max_table_string_length*30);
 		account_main_frame_height = ((account_table_row*35)+250);
 	//	account_main_frame.setBounds(120,120,account_main_frame_width,account_main_frame_height);
-		account_main_frame.setBounds(120,120,1200,400);
+		account_main_frame.setBounds(120,120,1050,800);
 		
-		account_table_pannel.setBounds(50, 100, ((account_table_column-1)*80+max_table_string_length*30), (account_table_row*35));
+		account_table_legend_panel.setBounds(50, 85, ((account_table_column-1)*80+max_table_string_length*30), 35);
+		account_table_pannel.setBounds(50, 120, ((account_table_column-1)*80+max_table_string_length*30), (account_table_row*35));
 		
 		
 		//main title label setting
@@ -349,6 +373,7 @@ class AccountMain
 		account_main_frame.add(add_deal_button);
 		
 		//last setting: add pannel to frame & visible 
+		account_main_frame.add(account_table_legend_panel);
 		account_main_frame.add(account_table_pannel);
 		account_main_frame.setVisible(true);
 		

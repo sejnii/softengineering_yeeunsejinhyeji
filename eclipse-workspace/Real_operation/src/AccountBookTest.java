@@ -19,7 +19,7 @@ class AccountBookTest {
 		AccountWrite write = new AccountWrite();
 		
 		String write_item="solo cappuccino";
-		write.fileWrite("20171223", write_item, "4500");
+		write.fileWrite("2017/12/23", write_item, "4500");
 		
 		String write_line_item;
 		String get_write_line_item = null;
