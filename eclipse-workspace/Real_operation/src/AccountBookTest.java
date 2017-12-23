@@ -39,6 +39,11 @@ class AccountBookTest {
 	@Test
 	public void testAccounEdit() throws IOException 
 	{
+		AccountWrite write = new AccountWrite();
+		write.fileWrite("2017/12/24", "double cappuccino", "3800");
+		write.fileWrite("2017/12/25", "cold cappuccino", "4000");
+		write.fileWrite("2017/12/23", "hot cappuccino", "3000");
+
 		String edit_item="[m]golden_cake";
 		String before_edit="";
 		String edit_line_item;
