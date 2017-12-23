@@ -10,8 +10,11 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.io.Writer;
+import javax.swing.text.AttributeSet;
 
 import javax.swing.*;
+import javax.swing.text.BadLocationException;
+import javax.swing.text.PlainDocument;
 
 public class MemoWrite extends JFrame implements ActionListener{
    
@@ -23,7 +26,7 @@ public class MemoWrite extends JFrame implements ActionListener{
    public MemoWrite() {
       setTitle("MemoWrite");
       setSize(500,300);
-      setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+      setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
       
       panel = new JPanel();
       panel.setLayout(new BorderLayout());
@@ -41,11 +44,12 @@ public class MemoWrite extends JFrame implements ActionListener{
       
       ptfmemo = new JPanel();
       tfmemo = new JTextField(30);
+      tfmemo.setDocument(new JTextFieldLimit(20));
       ptfmemo.add(tfmemo);
       panel.add(ptfmemo,BorderLayout.CENTER);
       
       pbtnsave = new JPanel();
-      btnsave = new JButton("저장");
+      btnsave = new JButton("저  장");
       btnsave.addActionListener(this);
       pbtnsave.add(btnsave);
       panel.add(pbtnsave, BorderLayout.PAGE_END);
@@ -66,7 +70,7 @@ public class MemoWrite extends JFrame implements ActionListener{
          memo_writer.append(data);
          memo_writer.close();
       }catch(IOException ex) {
-         System.out.println("오류");
+         System.out.println("�삤瑜�");
       }
    }
    
@@ -89,4 +93,26 @@ public class MemoWrite extends JFrame implements ActionListener{
       
    }
 
+   
+   class JTextFieldLimit extends PlainDocument {
+       private int limit;
+       JTextFieldLimit(int limit) {
+         super();
+         this.limit = limit;
+       }
+
+       JTextFieldLimit(int limit, boolean upper) {
+         super();
+         this.limit = limit;
+       }
+
+       public void insertString(int offset, String str, AttributeSet attr) throws BadLocationException {
+         if (str == null)
+           return;
+
+         if ((getLength() + str.length()) <= limit) {
+           super.insertString(offset, str, attr);
+         }
+       }
+     }
 }

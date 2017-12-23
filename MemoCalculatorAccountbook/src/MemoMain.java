@@ -63,9 +63,9 @@ public class MemoMain{
       memo_table_label = new JLabel[20][3];
       
       
-      memo_table_label[0][0]=new JLabel("¸Þ¸ð ³»¿ë");
-      memo_table_label[0][1]=new JLabel("¼ö  Á¤");
-      memo_table_label[0][2]=new JLabel("»è  Á¦");
+      memo_table_label[0][0]=new JLabel("ë©”ëª¨ ë‚´ìš©");
+      memo_table_label[0][1]=new JLabel("ìˆ˜  ì •");
+      memo_table_label[0][2]=new JLabel("ì‚­  ì œ");
       
       
       try {
@@ -94,7 +94,7 @@ public class MemoMain{
          memo_table_label[i][0].setAlignmentY(Component.LEFT_ALIGNMENT);
          memo_table_label[i][0].setSize(300, 20);
          
-         memo_modify_button[i] = new JButton("¼ö  Á¤");
+         memo_modify_button[i] = new JButton("ìˆ˜  ì •");
          memo_modify_button[i].setSize(80, 17);
          memo_table_label[i][1] = new JLabel();
          memo_table_label[i][1] = new JLabel("                                ");
@@ -115,7 +115,7 @@ public class MemoMain{
                         
       
          
-         memo_delete_button[i] = new JButton("»è  Á¦");
+         memo_delete_button[i] = new JButton("ì‚­  ì œ");
          memo_delete_button[i].setSize(80, 17);
          memo_table_label[i][2] = new JLabel();
          memo_table_label[i][2] = new JLabel("                                ");
@@ -156,14 +156,14 @@ public class MemoMain{
       
       }
       catch(IOException e) {
-    	  for(int j=0;j<3;j++)
-    		  pcenter.add(memo_table_label[0][j]);
+         for(int j=0;j<3;j++)
+            pcenter.add(memo_table_label[0][j]);
       }
       
       panel.add(pcenter, BorderLayout.CENTER);
       
       pbottom = new JPanel();
-      btnwrite = new JButton("¸Þ¸ð ÀÛ¼º");
+      btnwrite = new JButton("ë©”ëª¨ ìž‘ì„±");
       btnwrite.setAlignmentX(Component.RIGHT_ALIGNMENT);
       btnwrite.addActionListener(new ActionListener() {
          public void actionPerformed(ActionEvent e) {
