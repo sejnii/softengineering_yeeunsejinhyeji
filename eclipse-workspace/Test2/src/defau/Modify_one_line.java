@@ -24,6 +24,7 @@ public class Modify_one_line
 
 		JFormattedTextField account_price_textfield2 = new JFormattedTextField();
 
+	//	account_date_textfield.setText(t);
 		
 		account_modify_frame.setLayout(null);
 		account_modify_frame.setBounds(500,100,400,600);
