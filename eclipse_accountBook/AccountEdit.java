@@ -3,10 +3,8 @@ import java.awt.event.KeyEvent;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.io.BufferedWriter;
-import java.io.FileNotFoundException;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.io.UnsupportedEncodingException;
 import java.io.Writer;
 import java.text.Format;
 import java.text.ParseException;
@@ -29,66 +27,7 @@ public class AccountEdit
 {
 
 	
-	public JTextField account_item_textfield = new JTextField();
-
-	////////////세진 추가2///////////////
-	public static void editfile(int edit_index, String modify_account_date, String modify_account_item, String modify_account_price)
-	{
-		AccountMain main = new AccountMain();
-		main.SetFiletoArray();
-		try{
-		Writer date_txt_writer;
-		Writer item_txt_writer;
-		Writer price_txt_writer;
-		
-			date_txt_writer = new BufferedWriter(new FileWriter("accountdate.txt"));
-			item_txt_writer = new BufferedWriter(new FileWriter("accountitem.txt"));
-			price_txt_writer = new BufferedWriter(new FileWriter("accountprice.txt"));
-
-		
-		
-		int size = AccountMain.account_date.size();
-		for(int i=0;i<size;i++){
-			if(i!=edit_index)
-					date_txt_writer.write(AccountMain.account_date.elementAt(i)+"\r\n");
-				
-			else if(i==edit_index)
-				date_txt_writer.write(modify_account_date+"\r\n");
-		}
-		
-		for(int i=0;i<size;i++){
-			if(i!=edit_index)
-					item_txt_writer.write(AccountMain.account_item.elementAt(i)+"\r\n");
-				
-			else if(i==edit_index)
-				item_txt_writer.write(modify_account_item+"\r\n");
-		}
-		
-		for(int i=0;i<size;i++){
-			if(i!=edit_index)
-				 	price_txt_writer.write(AccountMain.account_price.elementAt(i)+"\r\n");
-				
-			else if(i==edit_index)
-				price_txt_writer.write(modify_account_price+"\r\n");
-		}
-		
-		
-		date_txt_writer.close();
-		item_txt_writer.close();
-		price_txt_writer.close();
-
-		
-		
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		
-		
-	}
-	
-	public AccountEdit(int edit_index) 
-	{
+	public AccountEdit(AccountMain main, int edit_index) {
 		
 		JFrame account_modify_frame = new JFrame("Modify");
 		JLabel acoount_modify_main_label = new JLabel("Rewrite the transaction history");
@@ -99,6 +38,7 @@ public class AccountEdit
 		JLabel account_modify_item_label = new JLabel("Rewrite the item name");
 		JLabel account_modify_price_label = new JLabel("Rewrite the price");
 		JFormattedDateTextField account_date_textfield = new JFormattedDateTextField();
+		JTextField account_item_textfield = new JTextField();
 		JTextField account_price_textfield2 = new JTextField();
 		
 		
@@ -138,6 +78,7 @@ public class AccountEdit
 		
 		account_modify_yes_btn.addMouseListener(new MouseListener()
 		{
+				@SuppressWarnings("static-access")
 				public void mouseClicked(MouseEvent e)
 				{
 
@@ -149,9 +90,10 @@ public class AccountEdit
 						
 					String modify_account_date, modify_account_item;
 					String modify_account_price;
+					modify_account_date=account_date_textfield.getText();
 					modify_account_item=account_item_textfield.getText();
 					modify_account_price=account_price_textfield2.getText();
-					modify_account_date=account_date_textfield.getText();
+					
 					/*
 					
 					
@@ -163,7 +105,6 @@ public class AccountEdit
 					
 					
 					////////////세진 수정2///////////////
-					
 					editfile(edit_index, modify_account_date, modify_account_item, modify_account_price);
 					////////////여기까지////////////////////
 					}
@@ -175,18 +116,68 @@ public class AccountEdit
 					}
 					
 					////////////세진 수정2///////////////
-					account_modify_frame.setVisible(false);
-					account_modify_frame.dispose();
-					AccountMain.dispose();
+					main.dispose();
 					new AccountMain();
-									/////////////////여기까지/////////////////
+					/////////////////여기까지/////////////////
 				}
 				
 				
 				
 				
 				
+				////////////세진 추가2///////////////
+				void editfile(int edit_index, String modify_account_date, String modify_account_item, int modify_account_price){
+				
+					try{
+					Writer date_txt_writer;
+					Writer item_txt_writer;
+					Writer price_txt_writer;
+					
+						date_txt_writer = new BufferedWriter(new FileWriter("C:\\\\\\\\Users\\\\\\\\Public\\\\\\\\AccountDate.txt"));
+						item_txt_writer = new BufferedWriter(new FileWriter("C:\\\\\\\\Users\\\\\\\\Public\\\\\\\\AccountItem.txt"));
+						price_txt_writer = new BufferedWriter(new FileWriter("C:\\\\\\\\Users\\\\\\\\Public\\\\\\\\AccountPrice.txt"));
 
+					
+					
+					int size = AccountMain.account_date.size();
+					for(int i=0;i<size;i++){
+						if(i!=edit_index)
+								date_txt_writer.write(AccountMain.account_date.elementAt(i)+"\r\n");
+							
+						else if(i==edit_index)
+							date_txt_writer.write(modify_account_date+"\r\n");
+					}
+					
+					for(int i=0;i<size;i++){
+						if(i!=edit_index)
+								item_txt_writer.write(AccountMain.account_item.elementAt(i)+"\r\n");
+							
+						else if(i==edit_index)
+							item_txt_writer.write(modify_account_item+"\r\n");
+					}
+					
+					for(int i=0;i<size;i++){
+						if(i!=edit_index)
+							 	price_txt_writer.write(AccountMain.account_price.elementAt(i)+"\r\n");
+							
+						else if(i==edit_index)
+							price_txt_writer.write(modify_account_price+"\r\n");
+					}
+					
+					
+					date_txt_writer.close();
+					item_txt_writer.close();
+					price_txt_writer.close();
+
+					
+					
+					} catch (IOException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+					
+					
+				}
 				
 				
 				////////////////////////여기까지/////////////////////////////
@@ -218,7 +209,6 @@ public class AccountEdit
 					// TODO Auto-generated method stub
 					
 				}
-				
 		});
 		
 		
