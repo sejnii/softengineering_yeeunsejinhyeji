@@ -60,7 +60,16 @@ public class MemoWrite extends JFrame implements ActionListener{
 		new MemoWrite();
 		
 	}
-
+	public void memoFileWrite(String data) {
+		try {
+			Writer memo_writer = new BufferedWriter(new FileWriter("memo.txt",true));
+			memo_writer.append(data);
+			memo_writer.close();
+		}catch(IOException ex) {
+			System.out.println("오류");
+		}
+	}
+	
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		// TODO Auto-generated method stub
@@ -70,14 +79,7 @@ public class MemoWrite extends JFrame implements ActionListener{
 		if(source == btnsave) {
 			String data = tfmemo.getText()+"\r\n";
 			
-			try {
-				Writer memo_writer = new BufferedWriter(new FileWriter("memo.txt",true));
-				memo_writer.append(data);
-				memo_writer.close();
-			}catch(IOException ex) {
-				System.out.println("오류");
-			}
-			
+			memoFileWrite(data);
 			
 			MemoMain.dispose();
 			new MemoMain();

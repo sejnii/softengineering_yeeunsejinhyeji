@@ -57,7 +57,27 @@ public class MemoEdit extends JFrame implements ActionListener {
 	}
 	
 	
-	
+	public void memoFileEdit(String s) {
+		try {
+			
+			Writer memo_writer = new BufferedWriter(new FileWriter("memo.txt"));
+			int length = MemoMain.memo_vec.size();
+			
+			for(int i=1;i<length;i++)
+			{
+				if(i!=modify_index) {
+					memo_writer.write(MemoMain.getMemoContent(i)+"\r\n");}
+				else {
+					memo_writer.write(s);
+					}
+				}
+		
+			memo_writer.close();
+		}
+		catch(IOException e1) {
+			
+		}
+	}
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
@@ -65,29 +85,9 @@ public class MemoEdit extends JFrame implements ActionListener {
 		Object source = e.getSource();
 		
 		if(source == btnrevise) {
-			try {
-				System.out.println("edit index : "+modify_index);
-			Writer memo_writer = new BufferedWriter(new FileWriter("memo.txt"));
-			int length = MemoMain.memo_vec.size();
-			System.out.println("len : "+length);
-			for(int i=1;i<length;i++)
-			{
-				if(i!=modify_index) {
-					System.out.println(MemoMain.getMemoContent(i));
-					memo_writer.write(MemoMain.getMemoContent(i)+"\r\n");}
-				else {
-					System.out.println(tfmemo.getText());
-					memo_writer.write(tfmemo.getText()+"\r\n");
-				}
-			}
 			
-			System.out.println("for¹® ³¡");
-			memo_writer.close();
-			}
-			catch(IOException e1) {
-				
-			}
-			
+			String s = tfmemo.getText()+"\r\n";
+			memoFileEdit(s);
 			
 			MemoMain.dispose();
 			new MemoMain();

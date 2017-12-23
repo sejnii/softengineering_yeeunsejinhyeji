@@ -43,11 +43,9 @@ public class MemoMain{
 	
 	public MemoMain() {
 		
-		frame = new JFrame();
 		
-		frame.setTitle("MemoMain");
-		frame.setSize(500,600);
-	
+		frame = new JFrame();
+	    frame.setTitle("MemoMain");
 		
 		panel = new JPanel();
 		panel.setLayout(new BorderLayout());
@@ -70,8 +68,6 @@ public class MemoMain{
 		while((memo_str = reader.readLine())!=null) {
 			memo_vec.add( memo_cnt, memo_str);
 			memo_cnt++;
-			System.out.println("memo_cnt : " + memo_cnt);
-			System.out.println("memo_vec size : "+memo_vec.size());
 		}
 		
 		reader.close();
@@ -108,7 +104,6 @@ public class MemoMain{
 					int modify_index=0;
 						for(int j=1;j<memo_cnt;j++) {
 							if(e.getSource()==memo_modify_button[j]) {
-								System.out.println("modify index"+j);
 								modify_index = j;
 							}
 						}
@@ -116,7 +111,7 @@ public class MemoMain{
 				}
 			});
 								
-					
+		
 			
 			memo_delete_button[i] = new JButton("»è  Á¦");
 			memo_delete_button[i].setSize(80, 17);
@@ -136,7 +131,6 @@ public class MemoMain{
 						
 					for(int j=1;j<memo_cnt;j++) {
 						if(e.getSource()!=memo_delete_button[j]) {
-							System.out.println(memo_vec.elementAt(j));
 							memo_writer.write(memo_vec.elementAt(j)+"\r\n");
 						}
 					}
@@ -173,7 +167,21 @@ public class MemoMain{
 				
 			}
 		});
-		System.out.println(memo_vec.size());
+		
+		 frame.setBounds(200,200,100*3+100,38*memo_cnt+60+20);
+	      panel.setSize(100*3, 35*memo_cnt+50);
+	      
+	      for (int i=0; i<memo_cnt; i++)
+	      {
+	         for(int j=0; j<3; j++)
+	         {
+	            memo_table_label[i][j].setBorder(BorderFactory.createLineBorder(Color.BLACK));
+	            memo_table_label[i][j].setVerticalAlignment(SwingConstants.CENTER);
+	            memo_table_label[i][j].setHorizontalAlignment(SwingConstants.CENTER);
+	        
+	         }
+	      }
+
 		pbottom.add(btnwrite);
 		panel.add(pbottom, BorderLayout.PAGE_END);
 		frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
