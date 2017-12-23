@@ -31,7 +31,7 @@ public class AccountEdit
 	
 	public JTextField account_item_textfield = new JTextField();
 
-	////////////¼¼Áø Ãß°¡2///////////////
+	////////////ï¿½ï¿½ï¿½ï¿½ ï¿½ß°ï¿½2///////////////
 	public static void editfile(int edit_index, String modify_account_date, String modify_account_item, String modify_account_price)
 	{
 		AccountMain main = new AccountMain();
@@ -162,10 +162,10 @@ public class AccountEdit
 					
 					
 					
-					////////////¼¼Áø ¼öÁ¤2///////////////
+					////////////ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½2///////////////
 					
 					editfile(edit_index, modify_account_date, modify_account_item, modify_account_price);
-					////////////¿©±â±îÁö////////////////////
+					////////////ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½////////////////////
 					}
 					else
 					{
@@ -174,12 +174,12 @@ public class AccountEdit
 				
 					}
 					
-					////////////¼¼Áø ¼öÁ¤2///////////////
+					////////////ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½2///////////////
 					account_modify_frame.setVisible(false);
 					account_modify_frame.dispose();
 					AccountMain.dispose();
 					new AccountMain();
-									/////////////////¿©±â±îÁö/////////////////
+									/////////////////ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½/////////////////
 				}
 				
 				
@@ -189,7 +189,7 @@ public class AccountEdit
 
 				
 				
-				////////////////////////¿©±â±îÁö/////////////////////////////
+				////////////////////////ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½/////////////////////////////
 				
 				
 				
@@ -266,11 +266,11 @@ public class AccountEdit
 		account_modify_frame.add(account_modify_yes_btn);
 		account_modify_frame.setVisible(true);
 		
-		////////////¼¼Áø ¼öÁ¤2///////////////
+		////////////ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½2///////////////
 		account_modify_frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 
 		
-		//////////////////¿©±â±îÁö///////////////
+		//////////////////ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½///////////////
 	}
 	
 	

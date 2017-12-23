@@ -10,7 +10,7 @@ import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
-
+package
 public class Main extends JFrame implements ActionListener{
 
 	JButton btmemo, btcal, btacc;

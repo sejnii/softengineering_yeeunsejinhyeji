@@ -56,12 +56,17 @@ public class AccountWrite
 {
 	boolean add_account_confirm_boolean=true;
 	
-	String add_account_date="";
-	String add_account_item="";
-	String add_account_price="";
+	public String add_account_date="";
+	public String add_account_item="";
+	public String add_account_price="";
 	JButton account_add_yes_btn = new JButton("Save");
 	
-	public static int countLines(File input) throws IOException {
+	public static JFormattedDateTextField account_date_textfield = new JFormattedDateTextField();
+	public static JFormattedTextField account_item_textfield = new JFormattedTextField();
+	public static JFormattedTextField account_price_textfield = new JFormattedTextField();
+
+	
+/*	public static int countLines(File input) throws IOException {
 	    try (InputStream is = new FileInputStream(input)) {
 	        int count = 1;
 	        for (int aChar = 0; aChar != -1;aChar = is.read())
@@ -69,7 +74,38 @@ public class AccountWrite
 	        return count;
 	    }
 	}
-	public AccountWrite() throws FileNotFoundException, UnsupportedEncodingException
+	
+*/	
+	public void fileWrite(String add_account_date, String add_account_item,String add_account_price)
+	{
+		try {
+			Writer date_txt_writer ;
+			Writer item_txt_writer;
+			Writer price_txt_writer;
+			
+			date_txt_writer = new BufferedWriter(new FileWriter(AccountMain.date_file, true));
+			item_txt_writer = new BufferedWriter(new FileWriter(AccountMain.item_file, true));
+			price_txt_writer = new BufferedWriter(new FileWriter(AccountMain.price_file, true));
+
+			
+			date_txt_writer.append(add_account_date+"\r\n");
+			item_txt_writer.append(add_account_item+"\r\n");
+			price_txt_writer.append(add_account_price+"\r\n");
+			
+			date_txt_writer.close();
+			item_txt_writer.close();
+			price_txt_writer.close();
+			
+
+
+//				String line = new String(Files.read)
+			
+		} catch (IOException e2) {
+			// TODO Auto-generated catch block
+			e2.printStackTrace();
+		}
+	}
+	public AccountWrite() 
 	{
 
 		
@@ -78,9 +114,7 @@ public class AccountWrite
 		JLabel account_add_date_label = new JLabel("Enter the date(year, Month, Day)");
 		JLabel account_add_item_label = new JLabel("Enter the item name");
 		JLabel account_add_price_label = new JLabel("Enter the price");
-		JFormattedDateTextField account_date_textfield = new JFormattedDateTextField();
-		JFormattedTextField account_item_textfield = new JFormattedTextField();
-		JFormattedTextField account_price_textfield = new JFormattedTextField();
+
 
 
 		JLabel add_test_show_label = new JLabel();
@@ -101,7 +135,6 @@ public class AccountWrite
 	
 		account_add_yes_btn.addMouseListener(new MouseListener()
 		{
-				@SuppressWarnings("static-access")
 				public void mouseClicked(MouseEvent e)
 				{
 
@@ -112,9 +145,14 @@ public class AccountWrite
 		//				AccountMain account_main = new AccountMain();
 						
 						add_account_confirm_boolean=true;
+					
+						
 					add_account_date=account_date_textfield.getText();
 					add_account_item=account_item_textfield.getText();
 					add_account_price=account_price_textfield.getText();
+					
+					
+					
 					
 					add_test_show_label.setText(add_account_date+";"
 												+add_account_item+";"
@@ -164,52 +202,22 @@ public class AccountWrite
 
 					}
 */					
-					/////// ÆÄÀÏ µ¡º×ÀÌ±â
+					/////// ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ì±ï¿½
 				//	File date_file=new File("C:\\\\\\\\Users\\\\\\\\Public\\\\\\\\AccountDate.txt")
 
-					Writer date_txt_writer;
-					Writer item_txt_writer;
-					Writer price_txt_writer;
+					fileWrite(add_account_date, add_account_item,add_account_price);
 					
-					try {
-						
-						
-					//	String buf = new String(Files.readAllBytes(Paths.get("C:\\\\\\\\\\\\\\\\Users\\\\\\\\\\\\\\\\Public\\\\\\\\\\\\\\\\AccountDate.txt")), StandardCharsets.UTF_8);
-						date_txt_writer = new BufferedWriter(new FileWriter(AccountMain.date_file, true));
-						item_txt_writer = new BufferedWriter(new FileWriter(AccountMain.item_file, true));
-						price_txt_writer = new BufferedWriter(new FileWriter(AccountMain.price_file, true));
+	
 
-						
-						date_txt_writer.append("\r\n"+add_account_date);
-						item_txt_writer.append("\r\n"+add_account_item);
-						price_txt_writer.append("\r\n"+add_account_price);
-
-						
-						date_txt_writer.close();
-						item_txt_writer.close();
-						price_txt_writer.close();
-
-		//				String line = new String(Files.read)
-						
-					} catch (IOException e2) {
-						// TODO Auto-generated catch block
-						e2.printStackTrace();
-					}
 					
 					
 					/*********** yes btn -> turn off write frame&turn on main frame ******************/
 					
 				account_add_frame.setVisible(false);
 				account_add_frame.dispose();
-				try {
+				AccountMain.dispose();
 					new AccountMain();
-				} catch (FileNotFoundException e1) {
-					// TODO Auto-generated catch block
-					e1.printStackTrace();
-				} catch (UnsupportedEncodingException e1) {
-					// TODO Auto-generated catch block
-					e1.printStackTrace();
-				}
+				
 				/****************************************************************************************/
 				
 									/*	
@@ -475,21 +483,17 @@ class JFormattedPriceTextField extends JFormattedTextField
 			public void focusLost(FocusEvent e)
 			{
 
-				try 
-				{
-	
+			
 		//			Date date = (Date) format.parseObject(getText());
 		//			setValue(format.format(date));
 					setValue();
-				} 
-				catch (ParseException pe)
-				{
+			
 	//				JOptionPane.showMessageDialog(null, "You can't transactiom more than that 1000,0000 won!");
 					setFocusLostBehavior(JFormattedTextField.PERSIST);
 					setText("");
 
 		//			setValue(null);
-				}
+				
 			}
 		});
 	}
@@ -498,33 +502,5 @@ class JFormattedPriceTextField extends JFormattedTextField
 	{
 		super.setValue("");
 	}
-  
-	@SuppressWarnings("unused")
-	private Date toDate(String sDate) 
-	{
-		Date date = null;
-		if (sDate == null) return null;
-		try
-		{
-			date = (Date) format.parseObject(sDate);
-		}
-		catch (ParseException pe)
-		{
-		// ignore
-		}
-  
-      return date;
-	}
-  
-	private String toString(Date date) 
-	{
-		try
-		{
-			return format.format(date);
-		}
-		catch (Exception e) 
-		{
-			return "";
-		}
-	}
 }
+  
