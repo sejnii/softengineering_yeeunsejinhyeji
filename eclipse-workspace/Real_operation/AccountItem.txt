@@ -1,0 +1,10 @@
+coffee
+solo cappuccino
+[m]golden_cake
+double cappuccino
+cold cappuccino
+solo cappuccino
+double cappuccino
+cold cappuccino
+hot cappuccino
+solo cappuccino
