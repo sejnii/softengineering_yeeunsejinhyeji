@@ -51,6 +51,10 @@ class AccountMain
 	static String item_file="AccountItem.txt";
 	static String price_file="AccountPrice.txt";
 	
+	
+	public JButton add_deal_button = new JButton("Add transaction history");
+
+	
 	public int SetFiletoArray()
 	{
 		int row_number=0;
@@ -136,7 +140,6 @@ class AccountMain
 		account_table_label= new JLabel[account_table_row][account_table_column];
 		JButton[] account_modify_button = new JButton[account_table_row];
 		JButton[] account_delete_button =  new JButton[account_table_row];
-		JButton add_deal_button = new JButton("Add transaction history");
 		
 		account_table_label = new JLabel[account_table_row][account_table_column];
 

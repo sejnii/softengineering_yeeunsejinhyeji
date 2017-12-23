@@ -29,6 +29,64 @@ public class AccountEdit
 {
 
 	
+	public JTextField account_item_textfield = new JTextField();
+
+	////////////세진 추가2///////////////
+	public static void editfile(int edit_index, String modify_account_date, String modify_account_item, String modify_account_price)
+	{
+		AccountMain main = new AccountMain();
+		main.SetFiletoArray();
+		try{
+		Writer date_txt_writer;
+		Writer item_txt_writer;
+		Writer price_txt_writer;
+		
+			date_txt_writer = new BufferedWriter(new FileWriter("accountdate.txt"));
+			item_txt_writer = new BufferedWriter(new FileWriter("accountitem.txt"));
+			price_txt_writer = new BufferedWriter(new FileWriter("accountprice.txt"));
+
+		
+		
+		int size = AccountMain.account_date.size();
+		for(int i=0;i<size;i++){
+			if(i!=edit_index)
+					date_txt_writer.write(AccountMain.account_date.elementAt(i)+"\r\n");
+				
+			else if(i==edit_index)
+				date_txt_writer.write(modify_account_date+"\r\n");
+		}
+		
+		for(int i=0;i<size;i++){
+			if(i!=edit_index)
+					item_txt_writer.write(AccountMain.account_item.elementAt(i)+"\r\n");
+				
+			else if(i==edit_index)
+				item_txt_writer.write(modify_account_item+"\r\n");
+		}
+		
+		for(int i=0;i<size;i++){
+			if(i!=edit_index)
+				 	price_txt_writer.write(AccountMain.account_price.elementAt(i)+"\r\n");
+				
+			else if(i==edit_index)
+				price_txt_writer.write(modify_account_price+"\r\n");
+		}
+		
+		
+		date_txt_writer.close();
+		item_txt_writer.close();
+		price_txt_writer.close();
+
+		
+		
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		
+	}
+	
 	public AccountEdit(int edit_index) 
 	{
 		
@@ -41,7 +99,6 @@ public class AccountEdit
 		JLabel account_modify_item_label = new JLabel("Rewrite the item name");
 		JLabel account_modify_price_label = new JLabel("Rewrite the price");
 		JFormattedDateTextField account_date_textfield = new JFormattedDateTextField();
-		JTextField account_item_textfield = new JTextField();
 		JTextField account_price_textfield2 = new JTextField();
 		
 		
@@ -106,6 +163,7 @@ public class AccountEdit
 					
 					
 					////////////세진 수정2///////////////
+					
 					editfile(edit_index, modify_account_date, modify_account_item, modify_account_price);
 					////////////여기까지////////////////////
 					}
@@ -117,7 +175,10 @@ public class AccountEdit
 					}
 					
 					////////////세진 수정2///////////////
-					
+					account_modify_frame.setVisible(false);
+					account_modify_frame.dispose();
+					AccountMain.dispose();
+					new AccountMain();
 									/////////////////여기까지/////////////////
 				}
 				
@@ -125,62 +186,7 @@ public class AccountEdit
 				
 				
 				
-				////////////세진 추가2///////////////
-				void editfile(int edit_index, String modify_account_date, String modify_account_item, String modify_account_price){
-				
-					try{
-					Writer date_txt_writer;
-					Writer item_txt_writer;
-					Writer price_txt_writer;
-					
-						date_txt_writer = new BufferedWriter(new FileWriter("accountdate.txt"));
-						item_txt_writer = new BufferedWriter(new FileWriter("accountitem.txt"));
-						price_txt_writer = new BufferedWriter(new FileWriter("accountprice.txt"));
 
-					
-					
-					int size = AccountMain.account_date.size();
-					for(int i=0;i<size;i++){
-						if(i!=edit_index)
-								date_txt_writer.write(AccountMain.account_date.elementAt(i)+"\r\n");
-							
-						else if(i==edit_index)
-							date_txt_writer.write(modify_account_date+"\r\n");
-					}
-					
-					for(int i=0;i<size;i++){
-						if(i!=edit_index)
-								item_txt_writer.write(AccountMain.account_item.elementAt(i)+"\r\n");
-							
-						else if(i==edit_index)
-							item_txt_writer.write(modify_account_item+"\r\n");
-					}
-					
-					for(int i=0;i<size;i++){
-						if(i!=edit_index)
-							 	price_txt_writer.write(AccountMain.account_price.elementAt(i)+"\r\n");
-							
-						else if(i==edit_index)
-							price_txt_writer.write(modify_account_price+"\r\n");
-					}
-					
-					
-					date_txt_writer.close();
-					item_txt_writer.close();
-					price_txt_writer.close();
-
-					account_modify_frame.setVisible(false);
-					account_modify_frame.dispose();
-					AccountMain.dispose();
-					new AccountMain();
-					
-					} catch (IOException e) {
-						// TODO Auto-generated catch block
-						e.printStackTrace();
-					}
-					
-					
-				}
 				
 				
 				////////////////////////여기까지/////////////////////////////
